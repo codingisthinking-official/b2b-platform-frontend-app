@@ -1,0 +1,12 @@
+version: '3.1'
+services:
+  server:
+    container_name:  b2b-platform-app-server
+    build:
+      context: .
+      dockerfile: .docker/react/prod/Dockerfile
+    ports:
+      - '8007:80'
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
