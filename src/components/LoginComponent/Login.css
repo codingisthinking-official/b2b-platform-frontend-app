@@ -1,0 +1,28 @@
+.container__signin {
+  width: 70%;
+  background: #fff;
+  padding: 20px;
+  color: #000;
+  margin: 0 auto;
+  border-radius: 10px;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.25);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.25);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.25);
+}
+
+.container__signin_form {
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 750px) {
+  .container__signin {
+    width: 100%;
+  }
+}
+
+.container__signin .info__register {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+
