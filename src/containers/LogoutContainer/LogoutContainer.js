@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import { Component } from "react";
 
 import AuthenticationService from "../../services/AuthenticationService";
 
-class LogoutComponent extends Component {
+class LogoutContainer extends Component {
   render() {
     AuthenticationService.logout();
 
@@ -12,4 +12,4 @@ class LogoutComponent extends Component {
   }
 }
 
-export default LogoutComponent;
+export default LogoutContainer;

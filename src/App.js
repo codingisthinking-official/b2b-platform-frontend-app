@@ -6,18 +6,19 @@ import './App.css';
 import Container from "react-bootstrap/Container";
 
 import Header from "./components/HeaderComponent/Header";
-import Login from "./components/LoginComponent/Login";
 import AuthenticationService from "./services/AuthenticationService";
 
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import NavMenuComponent from "./components/NavMenuComponent/NavMenuComponent";
 import FooterComponent from "./components/FooterComponent/FooterComponent";
-import LogoutComponent from "./components/LogoutComponent/LogoutComponent";
+import HomepageContainer
+  from "./containers/HomepageContainer/HomepageContainer";
+import LogoutContainer from "./containers/LogoutContainer/LogoutContainer";
+import Login from "./containers/LoginContainer/Login";
 
 class App extends React.Component {
   render() {
@@ -36,11 +37,11 @@ class App extends React.Component {
             users
           </Route>
           <Route path="/logout">
-            <LogoutComponent/>
+            <LogoutContainer/>
           </Route>
           <Route path="/">
             <NavMenuComponent/>
-            list of all available products
+            <HomepageContainer />
             <FooterComponent/>
           </Route>
         </Switch>
