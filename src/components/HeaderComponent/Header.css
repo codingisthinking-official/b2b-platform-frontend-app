@@ -6,3 +6,8 @@ header {
 header img {
   height: 70px;
 }
+
+.container-header {
+  background: #fff;
+  margin-bottom: 20px;
+}

@@ -5,6 +5,9 @@ class AuthenticationService {
   authenticateWithToken(token) {
     sessionStorage.setItem('jwtToken', token);
   }
+  logout() {
+    sessionStorage.setItem('jwtToken', '');
+  }
 }
 
 export default new AuthenticationService()

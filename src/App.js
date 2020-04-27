@@ -15,20 +15,46 @@ import {
   Route,
   Link
 } from "react-router-dom";
-
+import NavMenuComponent from "./components/NavMenuComponent/NavMenuComponent";
+import FooterComponent from "./components/FooterComponent/FooterComponent";
+import LogoutComponent from "./components/LogoutComponent/LogoutComponent";
 
 class App extends React.Component {
   render() {
     let context = null;
+    let loggedRouter = null;
+
     if (!AuthenticationService.isAuthenticated()) {
       context = <Login />;
+    } else {
+      loggedRouter = (<Router>
+        <Switch>
+          <Route path="/about">
+            about us
+          </Route>
+          <Route path="/users">
+            users
+          </Route>
+          <Route path="/logout">
+            <LogoutComponent/>
+          </Route>
+          <Route path="/">
+            <NavMenuComponent/>
+            list of all available products
+            <FooterComponent/>
+          </Route>
+        </Switch>
+      </Router>);
     }
 
     return (
-      <Container className={"container__main"}>
+      <div className="full-container">
         <Header center={!AuthenticationService.isAuthenticated()}/>
-        {context}
-      </Container>
+        <Container className={"container__main"}>
+          {context}
+          {loggedRouter}
+        </Container>
+      </div>
     );
   }
 }

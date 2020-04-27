@@ -1,13 +1,17 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import logo from "./logo.png";
 import './Header.css';
 
 class Header extends Component {
   render() {
     return (
-      <header style={{'textAlign': (this.props.center ? 'center' : '')}}>
-        <img src={logo} alt={"B2B CodingIsThinking"} />
-      </header>
+      <div className="container-header">
+        <header className={"container"} style={{'textAlign': (this.props.center ? 'center' : '')}}>
+          <a href={"/"} title="Homepage">
+            <img src={logo} alt={"B2B CodingIsThinking"} />
+          </a>
+        </header>
+      </div>
     );
   }
 }

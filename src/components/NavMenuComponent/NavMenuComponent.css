@@ -1,0 +1,17 @@
+nav {
+  background: #3a3f4b;
+  margin: 10px 0 30px 0;
+}
+
+nav .btn-outline-success {
+  border-color: #61dafb;
+  color: #61dafb;
+}
+
+nav .btn-outline-success:hover {
+  background: #61dafb;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: #fff;
+}
