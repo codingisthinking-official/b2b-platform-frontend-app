@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import config from "../../config";
+import { withRouter } from "react-router-dom";
 
 import AuthenticationService from "../../services/AuthenticationService";
+
+import "./SearchContainer.css";
 import ProductListComponent
   from "../../components/ProductListComponent/ProductListComponent";
 
-class HomepageContainer extends Component {
+class SearchContainer extends Component {
   constructor() {
     super();
     this.state = {
-      'products': []
+      'products': [],
     };
   }
 
@@ -22,7 +25,7 @@ class HomepageContainer extends Component {
         'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
       }
     };
-    fetch(config.api_url + '/api/products/', obj)
+    fetch(config.api_url + '/api/products/search?q=' + this.props.match.params.q, obj)
       .then(r => {
         r.json().then(r => {
           this.setState({
@@ -41,4 +44,4 @@ class HomepageContainer extends Component {
   }
 }
 
-export default HomepageContainer
+export default withRouter(SearchContainer);

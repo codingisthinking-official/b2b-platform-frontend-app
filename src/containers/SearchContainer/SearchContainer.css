@@ -1,0 +1,12 @@
+.box-white {
+  background: #fff;
+  padding: 20px;
+  color: #000;
+}
+
+.box-white h1 {
+  font-weight: 400;
+  font-size: 38px;
+  margin: 0;
+  padding: 0 0 20px 0;
+}

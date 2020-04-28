@@ -17,8 +17,10 @@ import NavMenuComponent from "./components/NavMenuComponent/NavMenuComponent";
 import FooterComponent from "./components/FooterComponent/FooterComponent";
 import HomepageContainer
   from "./containers/HomepageContainer/HomepageContainer";
-import LogoutContainer from "./containers/LogoutContainer/LogoutContainer";
 import Login from "./containers/LoginContainer/Login";
+import ProductContainer from "./containers/ProductContainer/ProductContainer";
+import config from "./config";
+import SearchContainer from "./containers/SearchContainer/SearchContainer";
 
 class App extends React.Component {
   render() {
@@ -28,16 +30,37 @@ class App extends React.Component {
     if (!AuthenticationService.isAuthenticated()) {
       context = <Login />;
     } else {
+      const obj = {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
+        }
+      };
+      fetch(config.api_url + '/api/account/current/', obj)
+        .then(resp => {
+          resp.json().then(r => {
+            if (resp.ok) {
+              AuthenticationService.setUser(r);
+            } else {
+              AuthenticationService.logout();
+              window.location.href = '/';
+            }
+          });
+        });
+
       loggedRouter = (<Router>
         <Switch>
-          <Route path="/about">
-            about us
+          <Route path="/products/search/:q/">
+            <NavMenuComponent/>
+            <SearchContainer />
+            <FooterComponent/>
           </Route>
-          <Route path="/users">
-            users
-          </Route>
-          <Route path="/logout">
-            <LogoutContainer/>
+          <Route path="/product/:productId/">
+            <NavMenuComponent/>
+            <ProductContainer />
+            <FooterComponent/>
           </Route>
           <Route path="/">
             <NavMenuComponent/>

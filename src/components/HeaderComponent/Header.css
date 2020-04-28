@@ -7,6 +7,14 @@ header img {
   height: 70px;
 }
 
+.user {
+  text-align: right;
+  color: #000;
+  padding: 10px;
+  margin: 0 auto;
+  font-size: 12px;
+}
+
 .container-header {
   background: #fff;
   margin-bottom: 20px;

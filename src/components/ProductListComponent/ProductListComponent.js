@@ -5,12 +5,12 @@ import ProductComponent from "./ProductComponent";
 
 class ProductListComponent extends Component {
   render() {
-    if (0 === this.props.products) {
+    if (!this.props.products) {
       return null;
     }
 
-    return (<div class={"product-container"}>{this.props.products.map((p) => {
-      return <ProductComponent product={p} />
+    return (<div className={"product-container"}>{this.props.products.map((p, i) => {
+      return <ProductComponent key={i} product={p} />
     })}</div>);
   }
 }

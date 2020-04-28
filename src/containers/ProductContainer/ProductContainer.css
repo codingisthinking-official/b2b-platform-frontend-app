@@ -1,0 +1,27 @@
+.box-white {
+  background: #fff;
+  padding: 20px;
+  color: #000;
+}
+
+.box-white h1,
+.box-white h2 {
+  font-weight: 400;
+  font-size: 38px;
+  margin: 0;
+  padding: 0 0 20px 0;
+}
+
+.box-white h2 {
+  font-size: 26px;
+  margin-top: 30px;
+}
+
+.box-white .price {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.modal-content {
+  color: #000;
+}

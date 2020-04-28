@@ -1,5 +1,4 @@
 .product-container {
-
 }
 
 .product-container .product {
@@ -9,14 +8,21 @@
   margin-right: 10px;
   color: #000;
   text-align: center;
-  width: calc(25% - 20px);
+  width: calc(25% - 10px);
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 990px) {
+  .product-container .product {
+    width: calc(50% - 10px);
+  }
 }
 
 .product-container .product h4 {
   margin-bottom: 15px;
   display: block;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .product-container .product img {
@@ -28,4 +34,8 @@
   display: block;
   margin: 10px 0;
   font-style: italic;
+}
+
+.product-container .product .btn-secondary {
+  margin-top: 10px;
 }

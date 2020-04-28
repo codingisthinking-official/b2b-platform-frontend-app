@@ -81,7 +81,11 @@ class Login extends Component {
           Login
         </Button>
         <div className="info__register">
-          You can also register a new account by <a href="#accounts/new/">clicking here</a>.
+          You can also register a new account by <a href="#" onClick={(e)=> {
+            alert('Not implemented yet.');
+            e.preventDefault();
+            e.stopPropagation();
+        }}>clicking here</a>.
         </div>
       </Form>
     </div>);
