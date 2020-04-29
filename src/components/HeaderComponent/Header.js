@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Form, FormControl, Row, Col } from "react-bootstrap";
 
 import logo from "./logo.svg";
 import './Header.css';
@@ -12,8 +12,13 @@ class Header extends Component {
     window.location.href = '/';
   }
 
+  search() {
+
+  }
+
   render() {
     let auth = null;
+    let search = null;
 
     if (AuthenticationService.isAuthenticated()) {
       const user = AuthenticationService.getUser();
@@ -27,17 +32,29 @@ class Header extends Component {
                     size={"sm"}>Logout</Button>
           </p>
         </div>);
+
+        search = (<Form className={"search-mobile"} inline onSubmit={e => {
+          this.search();
+          e.preventDefault();
+          e.stopPropagation();
+        }}>
+          <FormControl type="text" placeholder="Search for a product" className="mr-sm-2" onChange={e => {
+            this.setState({"q": e.target.value});
+          }}/>
+          <Button variant="info" onClick={this.search.bind(this)}>Search</Button>
+        </Form>);
       }
     }
 
     return (
       <div className="container-header">
+        {auth}
         <header className={"container"} style={{'textAlign': (this.props.center ? 'center' : '')}}>
           <a href={"/"} title="Homepage">
             <img src={logo} alt={"B2B CodingIsThinking"} />
           </a>
+          {search}
         </header>
-        {auth}
       </div>
     );
   }

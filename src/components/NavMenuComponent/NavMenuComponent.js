@@ -5,8 +5,17 @@ import AuthenticationService from "../../services/AuthenticationService";
 import './NavMenuComponent.css';
 
 class NavMenuComponent extends Component {
+  constructor() {
+    super();
+    this.state = {
+      'q': ''
+    };
+  }
+
   search() {
-    window.location.href = '/products/search/' + encodeURIComponent(this.state.q) + '/';
+    if (this.state.q.length > 0) {
+      window.location.href = '/products/search/' + encodeURIComponent(this.state.q) + '/';
+    }
   }
 
   render() {
@@ -18,7 +27,9 @@ class NavMenuComponent extends Component {
       if (user) {
         if (user.type === 1) {
           auth = (
-            <Nav.Link href="/import/">Import products</Nav.Link>
+            <Nav.Link href="/manage/products/" className={"btn-my-products"}>
+              Manage my products
+            </Nav.Link>
           );
         }
       }
@@ -31,7 +42,7 @@ class NavMenuComponent extends Component {
             <Nav.Link href="/">See all products</Nav.Link>
             {auth}
           </Nav>
-          <Form inline onSubmit={e => {
+          <Form className={"search-desktop"} inline onSubmit={e => {
             this.search();
             e.preventDefault();
             e.stopPropagation();

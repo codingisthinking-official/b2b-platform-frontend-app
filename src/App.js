@@ -21,6 +21,7 @@ import Login from "./containers/LoginContainer/Login";
 import ProductContainer from "./containers/ProductContainer/ProductContainer";
 import config from "./config";
 import SearchContainer from "./containers/SearchContainer/SearchContainer";
+import ManageProductsContainer from "./containers/ManageProductsContainer/ManageProductsContainer";
 
 class App extends React.Component {
   render() {
@@ -41,9 +42,7 @@ class App extends React.Component {
       fetch(config.api_url + '/api/account/current/', obj)
         .then(resp => {
           resp.json().then(r => {
-            if (resp.ok) {
-              AuthenticationService.setUser(r);
-            } else {
+            if (!resp.ok) {
               AuthenticationService.logout();
               window.location.href = '/';
             }
@@ -52,6 +51,11 @@ class App extends React.Component {
 
       loggedRouter = (<Router>
         <Switch>
+          <Route path="/manage/products/">
+            <NavMenuComponent/>
+            <ManageProductsContainer />
+            <FooterComponent/>
+          </Route>
           <Route path="/products/search/:q/">
             <NavMenuComponent/>
             <SearchContainer />
@@ -73,7 +77,7 @@ class App extends React.Component {
 
     return (
       <div className="full-container">
-        <Header center={!AuthenticationService.isAuthenticated()}/>
+        <Header />
         <Container className={"container__main"}>
           {context}
           {loggedRouter}

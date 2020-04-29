@@ -21,6 +21,7 @@ class AuthenticationService {
 
   logout() {
     sessionStorage.setItem('jwtToken', '');
+    sessionStorage.setItem('userDetails', JSON.stringify([]));
   }
 }
 

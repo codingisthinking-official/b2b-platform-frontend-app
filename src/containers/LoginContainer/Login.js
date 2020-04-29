@@ -42,7 +42,24 @@ class Login extends Component {
     }).then(responseJson => {
       if (responseJson) {
         AuthenticationService.authenticateWithToken(responseJson.token);
-        window.location.reload();
+
+        const obj = {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + responseJson.token
+          }
+        };
+        fetch(config.api_url + '/api/account/current/', obj)
+          .then(resp => {
+            resp.json().then(r => {
+              if (resp.ok) {
+                AuthenticationService.setUser(r);
+                window.location.reload();
+              }
+            });
+          });
       }
     });
 
@@ -64,7 +81,7 @@ class Login extends Component {
       </div>);
     }
 
-    return (<div className={"container__signin"}>
+    return (<div className={"container container__signin"}>
       <h1 className={"display_1"}>Sign in</h1>
       {loading}
       {error}
@@ -81,7 +98,7 @@ class Login extends Component {
           Login
         </Button>
         <div className="info__register">
-          You can also register a new account by <a href="#" onClick={(e)=> {
+          If you don't have account yet, you can register a new one by <a href="/register/" onClick={(e)=> {
             alert('Not implemented yet.');
             e.preventDefault();
             e.stopPropagation();

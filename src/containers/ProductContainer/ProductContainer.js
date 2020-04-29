@@ -71,12 +71,16 @@ class ProductContainer extends Component {
             </Button>
           </Form>
         </div>
-        <Modal show={this.state.showModal} onHide={handleClose} animation={false}>
+        <Modal show={this.state.showModal} onHide={handleClose} animation={true}>
           <Modal.Header closeButton>
             <Modal.Title>Order confirmation</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Thank you for your order. We will contact you as soon as possible.</Modal.Body>
-          <Modal.Footer>
+          <Modal.Body>
+            Thank you for your order. We will contact you as soon as possible.
+            <br/><br/>
+            The message (and push notification) will be send to the owner (supplier) of the product.
+          </Modal.Body>
+          <Modal.Footer className={"modal__footer-line-light"}>
             <Button variant="primary" onClick={handleClose}>
               OK
             </Button>

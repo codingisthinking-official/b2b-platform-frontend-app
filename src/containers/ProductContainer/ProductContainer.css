@@ -25,3 +25,7 @@
 .modal-content {
   color: #000;
 }
+
+.modal-footer.modal__footer-line-light {
+  border-top: 1px solid #c2d6fc;
+}

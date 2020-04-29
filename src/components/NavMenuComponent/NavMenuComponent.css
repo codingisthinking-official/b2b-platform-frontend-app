@@ -27,3 +27,19 @@ nav .btn-outline-success:hover {
   position: relative;
   top: -3px;
 }
+
+.navbar-dark .navbar-nav .nav-link {
+  padding: 10px 20px;
+}
+
+.btn-my-products {
+  background: #fff;
+  font-weight: 600;
+  color: #000 !important;
+}
+
+@media screen and (max-width: 768px) {
+  .search-desktop {
+    display: none;
+  }
+}
