@@ -7,6 +7,7 @@ import { Form, Button, Modal } from "react-bootstrap";
 import AuthenticationService from "../../services/AuthenticationService";
 
 import "./ProductContainer.css";
+import noPhotoImage from "../../components/ProductListComponent/no-photo.svg";
 
 class ProductContainer extends Component {
   constructor() {
@@ -46,6 +47,8 @@ class ProductContainer extends Component {
     }
 
     const handleClose = () => this.setShow(false);
+    const photo = this.state.product.thumbnail ? this.state.product.thumbnail : noPhotoImage;
+
     return (
       <div>
         <div className={"box-white"}>
@@ -53,7 +56,7 @@ class ProductContainer extends Component {
           <p>EAN: {this.state.product.ean}</p>
           <p>Location: {this.state.product.location}</p>
           <p className="price">Price &euro;{this.state.product.price}</p>
-          <img src={this.state.product.thumbnail} alt={this.state.product.name}/>
+          <img src={ photo } alt={this.state.product.name}/>
 
           <h2>Order now</h2>
 

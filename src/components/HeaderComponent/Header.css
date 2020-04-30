@@ -5,6 +5,7 @@ header {
 
 header img {
   height: 70px;
+  max-width: 100%;
 }
 
 .user {
@@ -30,9 +31,10 @@ header img {
   margin-top: 20px;
 }
 .search-mobile input[type=text] {
-  width: 80%;
+  width: calc(100% - 110px);
 }
 
 .search-mobile button {
-  margin-left: 4%;
+  width: 80px;
+  margin-left: 20px;
 }

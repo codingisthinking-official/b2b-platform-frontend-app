@@ -60,14 +60,17 @@ class ManageProductsContainer extends Component {
   }
 
   sendFile(formData) {
-//     fetch(config.api_url + '/api/account/import/', {
-//         method: 'POST',
-//         body: formData
-//       }).then(res => {
-//         if (res.ok) {
-//         } else {
-//         }
-//       });
+    fetch(config.api_url + '/api/account/import/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
+        }
+      }).then(res => {
+        if (res.ok) {
+        } else {
+        }
+      });
 
     this.setState({
       'fileUploaded': true

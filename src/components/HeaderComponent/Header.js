@@ -13,7 +13,9 @@ class Header extends Component {
   }
 
   search() {
-
+    if (this.state.q.length > 0) {
+      window.location.href = '/products/search/' + encodeURIComponent(this.state.q) + '/';
+    }
   }
 
   render() {
