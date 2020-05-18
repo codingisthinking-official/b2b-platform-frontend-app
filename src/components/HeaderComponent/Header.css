@@ -38,3 +38,18 @@ header img {
   width: 80px;
   margin-left: 20px;
 }
+
+.container-header .btn--add-home-button {
+  width: 100%;
+  border: 0;
+  padding: 15px 0;
+  text-align: center;
+  color: #fff;
+  background: #282C34;
+  display: block;
+  font-weight: 600;
+}
+
+.container-header .btn--add-home-button svg {
+  margin-right: 10px;
+}

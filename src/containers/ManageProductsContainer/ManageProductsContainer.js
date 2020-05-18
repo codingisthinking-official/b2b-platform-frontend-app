@@ -86,16 +86,19 @@ class ManageProductsContainer extends Component {
       const cols = this.state.products.map((p, i) => {
         return (<tr key={i}>
           <td>{p.id}</td>
-          <td>{p.name}</td>
-          <td>{p.ean}</td>
-          <td>{p.location}</td>
+          <td>
+            <strong>{p.name}</strong>
+            <br/>
+            {p.ean}<br/>
+            Location: {p.location}
+            </td>
           <td>
             <Button variant={"danger"} size={"sm"} onClick={(e) => {
               this.removeProduct(p);
               e.preventDefault();
               e.stopPropagation();
             }}>
-              <FontAwesomeIcon icon={ faTrash } /> Remove
+              <FontAwesomeIcon icon={ faTrash } />
             </Button>
           </td>
         </tr>)
@@ -106,8 +109,6 @@ class ManageProductsContainer extends Component {
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>EAN</th>
-            <th>Location</th>
             <th></th>
           </tr>
         </thead>

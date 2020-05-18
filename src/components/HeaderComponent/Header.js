@@ -5,6 +5,7 @@ import logo from "./logo.svg";
 import './Header.css';
 
 import AuthenticationService from "../../services/AuthenticationService";
+import InstallPWAComponent from "../InstallPWAComponent/InstallPWAComponent";
 
 class Header extends Component {
   logoutAction() {
@@ -21,6 +22,7 @@ class Header extends Component {
   render() {
     let auth = null;
     let search = null;
+    let homeScreenButton = null;
 
     if (AuthenticationService.isAuthenticated()) {
       const user = AuthenticationService.getUser();
@@ -48,8 +50,11 @@ class Header extends Component {
       }
     }
 
+    homeScreenButton = (<InstallPWAComponent/>);
+
     return (
       <div className="container-header">
+        {homeScreenButton}
         {auth}
         <header className={"container"} style={{'textAlign': (this.props.center ? 'center' : '')}}>
           <a href={"/"} title="Homepage">
