@@ -20,6 +20,7 @@ class NavMenuComponent extends Component {
 
   render() {
     let auth = null;
+    let subaccount = null;
 
     if (AuthenticationService.isAuthenticated()) {
       const user = AuthenticationService.getUser();
@@ -33,13 +34,23 @@ class NavMenuComponent extends Component {
           );
         }
       }
+
+      if (!user.master_account) {
+        subaccount = (
+          <Nav.Link href="/manage/subaccounts/" className={"btn-subaccounts"}>
+            Manage subaccounts
+          </Nav.Link>
+        );
+      }
     }
+
     return (
       <Navbar expand="md" variant={"dark"}>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/">See all products</Nav.Link>
+            {subaccount}
             {auth}
           </Nav>
           <Form className={"search-desktop"} inline onSubmit={e => {

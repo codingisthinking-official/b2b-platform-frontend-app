@@ -22,6 +22,8 @@ import ProductContainer from "./containers/ProductContainer/ProductContainer";
 import config from "./config";
 import SearchContainer from "./containers/SearchContainer/SearchContainer";
 import ManageProductsContainer from "./containers/ManageProductsContainer/ManageProductsContainer";
+import SubAccountsContainer
+  from "./containers/SubAccountsContainer/SubAccountsContainer";
 
 class App extends React.Component {
   render() {
@@ -54,6 +56,11 @@ class App extends React.Component {
           <Route path="/manage/products/">
             <NavMenuComponent/>
             <ManageProductsContainer />
+            <FooterComponent/>
+          </Route>
+          <Route path="/manage/subaccounts/">
+            <NavMenuComponent/>
+            <SubAccountsContainer />
             <FooterComponent/>
           </Route>
           <Route path="/products/search/:q/">
