@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import config from "../../config";
+import SidebarContainer from "../SidebarContainer/SidebarContainer";
 import AuthenticationService from "../../services/AuthenticationService";
 
 class ManageProductsContainer extends Component {
@@ -128,57 +129,60 @@ class ManageProductsContainer extends Component {
 
     const handleClose = () => this.setShow(false);
     return (
-      <div className={"box-white"}>
-        {fileUploadedAlert}
-        <h1>Manage products</h1>
-        <h2>Add new product</h2>
-        Currently, it is not possible to add a new product using the form on the page.
-        <br/>
-        However, you can use the import system using <strong>the prepared Excel file</strong>.
-        <br/>
-        <br/>
-        <Button variant={"secondary"} href={"/vendors/sample-import.xlsx"}>Download example CSV import file</Button>
-        <br/>
-        <br/>
-        <Button onClick={(e) => {
-          this.setState({
-            'showModal': true
-          });
-        }}>Import products</Button>
-        <h2>Your products</h2>
-        {products}
-        <Modal show={this.state.showModal} onHide={handleClose} animation={true}>
-          <Modal.Header closeButton>
-            <Modal.Title>Import products</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Please, drop your <strong>Excel file</strong> here
-            so we can add your products to our database.
-            <br/><br/>
-            <Form>
-              <Form.Group controlId="upload">
-                <Form.Control type="file" onChange={(event) => {
-                  this.setState({"selectedFile": event.target.files[0]})
-                }} />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer className={"modal__footer-line-light"}>
-            <Button variant="secondary" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={(e) => {
-              const data = new FormData()
-              data.append('file', this.state.selectedFile);
+      <div className={"container--with-sidebar"}>
+        <SidebarContainer />
+        <div className={"box-white"}>
+          {fileUploadedAlert}
+          <h1>Manage products</h1>
+          <h2>Add new product</h2>
+          Currently, it is not possible to add a new product using the form on the page.
+          <br/>
+          However, you can use the import system using <strong>the prepared Excel file</strong>.
+          <br/>
+          <br/>
+          <Button variant={"secondary"} href={"/vendors/sample-import.xlsx"}>Download example CSV import file</Button>
+          <br/>
+          <br/>
+          <Button onClick={(e) => {
+            this.setState({
+              'showModal': true
+            });
+          }}>Import products</Button>
+          <h2>Your products</h2>
+          {products}
+          <Modal show={this.state.showModal} onHide={handleClose} animation={true}>
+            <Modal.Header closeButton>
+              <Modal.Title>Import products</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Please, drop your <strong>Excel file</strong> here
+              so we can add your products to our database.
+              <br/><br/>
+              <Form>
+                <Form.Group controlId="upload">
+                  <Form.Control type="file" onChange={(event) => {
+                    this.setState({"selectedFile": event.target.files[0]})
+                  }} />
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer className={"modal__footer-line-light"}>
+              <Button variant="secondary" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={(e) => {
+                const data = new FormData()
+                data.append('file', this.state.selectedFile);
 
-              this.sendFile(data);
-              e.preventDefault();
-              e.stopPropagation();
-            }} disabled={this.state.selectedFile === ''}>
-              Import
-            </Button>
-          </Modal.Footer>
-        </Modal>
+                this.sendFile(data);
+                e.preventDefault();
+                e.stopPropagation();
+              }} disabled={this.state.selectedFile === ''}>
+                Import
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
       </div>
     );
   }

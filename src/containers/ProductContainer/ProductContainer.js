@@ -8,6 +8,7 @@ import AuthenticationService from "../../services/AuthenticationService";
 
 import "./ProductContainer.css";
 import noPhotoImage from "../../components/ProductListComponent/no-photo.svg";
+import SidebarContainer from "../SidebarContainer/SidebarContainer";
 
 class ProductContainer extends Component {
   constructor() {
@@ -50,7 +51,8 @@ class ProductContainer extends Component {
     const photo = this.state.product.thumbnail ? this.state.product.thumbnail : noPhotoImage;
 
     return (
-      <div>
+      <div className={"container--with-sidebar"}>
+        <SidebarContainer />
         <div className={"box-white"}>
           <h1>{this.state.product.name}</h1>
           <p>EAN: {this.state.product.ean}</p>

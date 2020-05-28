@@ -1,10 +1,24 @@
 .box-white {
+  width: calc(100% - 250px);
+  display: inline-block;
+  vertical-align: top;
   background: #fff;
   padding: 20px;
   color: #000;
 }
 
-.box-white h1,
+.box-white h1 {
+  display: block;
+  padding: 20px !important;;
+  border-bottom: 10px solid #282C34;
+  text-transform: uppercase;
+  background: #000;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  margin: -20px -20px 20px -20px !important;
+  color: #fff;
+}
+
 .box-white h2 {
   font-weight: 400;
   font-size: 38px;

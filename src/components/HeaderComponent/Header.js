@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, FormControl, Row, Col } from "react-bootstrap";
+import { Button, Form, FormControl } from "react-bootstrap";
 
 import logo from "./logo.svg";
 import './Header.css';

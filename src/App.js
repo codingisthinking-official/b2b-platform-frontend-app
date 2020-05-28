@@ -24,6 +24,8 @@ import SearchContainer from "./containers/SearchContainer/SearchContainer";
 import ManageProductsContainer from "./containers/ManageProductsContainer/ManageProductsContainer";
 import SubAccountsContainer
   from "./containers/SubAccountsContainer/SubAccountsContainer";
+import CategoryProducts
+  from "./containers/CategoryProductsContainer/CategoryProducts";
 
 class App extends React.Component {
   render() {
@@ -58,7 +60,7 @@ class App extends React.Component {
             <ManageProductsContainer />
             <FooterComponent/>
           </Route>
-          <Route path="/manage/subaccounts/">
+          <Route path="/manage/subAccounts/">
             <NavMenuComponent/>
             <SubAccountsContainer />
             <FooterComponent/>
@@ -71,6 +73,11 @@ class App extends React.Component {
           <Route path="/product/:productId/">
             <NavMenuComponent/>
             <ProductContainer />
+            <FooterComponent/>
+          </Route>
+          <Route path="/category/:category/">
+            <NavMenuComponent/>
+            <CategoryProducts />
             <FooterComponent/>
           </Route>
           <Route path="/">

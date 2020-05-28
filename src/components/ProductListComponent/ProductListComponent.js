@@ -5,11 +5,19 @@ import ProductComponent from "./ProductComponent";
 
 class ProductListComponent extends Component {
   render() {
-    if (!this.props.products) {
+    if (this.props.products === null) {
       return null;
     }
 
-    return (<div className={"product-container"}>{this.props.products.map((p, i) => {
+    let heading = null;
+
+    if (this.props.heading) {
+      heading = (<h2 className={"product--container-heading"}>{this.props.heading}</h2>)
+    }
+
+    return (<div className={"product-container"}>
+      {heading}
+      {this.props.products.map((p, i) => {
       return <ProductComponent key={i} product={p} />
     })}</div>);
   }

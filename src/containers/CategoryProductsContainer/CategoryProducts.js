@@ -3,17 +3,16 @@ import config from "../../config";
 import { withRouter } from "react-router-dom";
 
 import AuthenticationService from "../../services/AuthenticationService";
-
-import "./SearchContainer.css";
 import ProductListComponent
   from "../../components/ProductListComponent/ProductListComponent";
 import SidebarContainer from "../SidebarContainer/SidebarContainer";
 
-class SearchContainer extends Component {
+class CategoryProducts extends Component {
   constructor() {
     super();
     this.state = {
-      'products': [],
+      'products': null,
+      'category': null
     };
   }
 
@@ -26,27 +25,32 @@ class SearchContainer extends Component {
         'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
       }
     };
-    fetch(config.api_url + '/api/products/search?q=' + this.props.match.params.q, obj)
+    fetch(config.api_url + '/api/category/by-name/' + this.props.match.params.category, obj)
       .then(r => {
         r.json().then(r => {
           this.setState({
-            'products': r,
+            'category': r,
+            'products': r.products,
           })
         });
       });
   }
 
   render() {
-    if (0 === this.state.products.length) {
+    if (!this.state.products || !this.state.category) {
       return null;
     }
 
     return (
       <div className={"container--with-sidebar"}>
-        <SidebarContainer />
-        <ProductListComponent heading={"Result"} products={this.state.products} />
-      </div>);
+        <SidebarContainer current={this.props.match.params.category} />
+        <ProductListComponent
+          heading={this.state.category.name}
+          products={this.state.products}
+        />
+      </div>
+    );
   }
 }
 
-export default withRouter(SearchContainer);
+export default withRouter(CategoryProducts)

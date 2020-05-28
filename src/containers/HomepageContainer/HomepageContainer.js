@@ -4,6 +4,7 @@ import config from "../../config";
 import AuthenticationService from "../../services/AuthenticationService";
 import ProductListComponent
   from "../../components/ProductListComponent/ProductListComponent";
+import SidebarContainer from "../SidebarContainer/SidebarContainer";
 
 class HomepageContainer extends Component {
   constructor() {
@@ -37,7 +38,12 @@ class HomepageContainer extends Component {
       return null;
     }
 
-    return <ProductListComponent products={this.state.products} />;
+    return (
+      <div className={"container--with-sidebar"}>
+        <SidebarContainer />
+        <ProductListComponent heading={"Recent products"} products={this.state.products} />
+      </div>
+    );
   }
 }
 

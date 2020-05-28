@@ -1,4 +1,7 @@
 .product-container {
+  width: calc(100% - 250px);
+  display: inline-block;
+  vertical-align: top;
 }
 
 .product-container .product {
@@ -38,4 +41,14 @@
 
 .product-container .product .btn-secondary {
   margin-top: 10px;
+}
+
+.product-container .product--container-heading {
+  display: block;
+  padding: 20px;
+  text-transform: uppercase;
+  background: #000;
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 10px;
 }

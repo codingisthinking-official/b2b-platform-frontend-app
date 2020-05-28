@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { Button } from "react-bootstrap";
 
 import './ProductListComponent.css';
 import noPhotoImage from "./no-photo.svg";
+import {faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 
 class ProductComponent extends Component {
   render() {
@@ -23,7 +23,7 @@ class ProductComponent extends Component {
       <p>Location: {this.props.product.location}</p>
 
       <Button variant={"secondary"} href={"/product/" + this.props.product.id + "/"} size={"sm"}>
-        <FontAwesomeIcon icon={ faEye } /> Check product
+        <FontAwesomeIcon icon={ faShoppingCart } /> add product
       </Button>
     </div>)
   }

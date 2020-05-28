@@ -10,6 +10,7 @@ import { Table, Form, Alert, Button, Modal } from "react-bootstrap";
 import AuthenticationService from "../../services/AuthenticationService";
 
 import "./SubAccountsContainer.css";
+import SidebarContainer from "../SidebarContainer/SidebarContainer";
 
 class SubAccountsContainer extends Component {
   constructor() {
@@ -20,6 +21,7 @@ class SubAccountsContainer extends Component {
       'name': '',
       'email': '',
       'password': '',
+      'errors': [],
     };
   }
 
@@ -72,6 +74,10 @@ class SubAccountsContainer extends Component {
         this.fetchAllSubAccounts();
         this.setShow(false);
       } else {
+        res.json().then((r) => {
+          console.log(r);
+          this.setState({'errors': r});
+        });
       }
     });
   }
@@ -134,10 +140,19 @@ class SubAccountsContainer extends Component {
       subAccounts = <Alert variant={"primary"}>No subaccounts added yet.</Alert>
     }
 
+    let alerts = null;
+
+    if (this.state.errors && this.state.errors.length > 0) {
+      alerts = this.state.errors.map((e,i) => {
+        return (<Alert variant={"danger"} key={i}>{e.message}</Alert>);
+      });
+    }
+
     return (
-      <div>
+      <div className={"container--with-sidebar"}>
+        <SidebarContainer />
         <div className={"box-white"}>
-          <h1>Manage subaccounts</h1>
+          <h1 className={"product--container-heading"}>Manage subaccounts</h1>
           {subAccounts}
           <Button variant={"primary"} onClick={this.openAccountForm.bind(this)}>
             Add a new subaccount
@@ -150,6 +165,7 @@ class SubAccountsContainer extends Component {
               Please, enter a name, e-mail address and initial password
               so we can create a new sub-account.
               <br/><br/>
+              {alerts}
               <Form>
                 <Form.Group controlId="name">
                   <Form.Label>Full name</Form.Label>

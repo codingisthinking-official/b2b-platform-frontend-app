@@ -97,13 +97,13 @@ class Login extends Component {
         <Button variant="primary" type="submit">
           Login
         </Button>
-        <div className="info__register">
-          If you don't have account yet, you can register a new one by <a href="/register/" onClick={(e)=> {
-            alert('Not implemented yet.');
-            e.preventDefault();
-            e.stopPropagation();
-        }}>clicking here</a>.
-        </div>
+        {/*<div className="info__register">*/}
+        {/*  If you don't have account yet, you can register a new one by <a href="/register/" onClick={(e)=> {*/}
+        {/*    alert('Not implemented yet.');*/}
+        {/*    e.preventDefault();*/}
+        {/*    e.stopPropagation();*/}
+        {/*}}>clicking here</a>.*/}
+        {/*</div>*/}
       </Form>
     </div>);
   }
