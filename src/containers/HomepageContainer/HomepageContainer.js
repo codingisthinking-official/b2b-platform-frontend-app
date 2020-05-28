@@ -41,7 +41,7 @@ class HomepageContainer extends Component {
     return (
       <div className={"container--with-sidebar"}>
         <SidebarContainer />
-        <ProductListComponent heading={"Recent products"} products={this.state.products} />
+        <ProductListComponent heading={"Najnowsze produkty"} products={this.state.products} />
       </div>
     );
   }

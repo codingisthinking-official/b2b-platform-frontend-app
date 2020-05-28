@@ -13,35 +13,35 @@ class SidebarContainer extends Component {
     this.state = {
       items: [
         {
-          "title": "Categories",
+          "title": "Kategorie",
           "children": []
         },
         {
-          "title": "Account",
+          "title": "Zarządzaj kontem",
           "children": [
             {
-              "title": "Edit my profile",
+              "title": "Edytuj mój profil",
               "url": "/manage/products/",
             },
             {
-              "title": "My orders",
+              "title": "Moje zamówienia",
               "url": "/profile/orders/",
             },
             {
-              "title": "My invoices",
+              "title": "Faktury",
               "url": "/profile/invoices/",
             }
           ]
         },
         {
-          "title": "Manage",
+          "title": "Zarządzanie",
           "children": [
             {
-              "title": "Manage Products",
+              "title": "Zarządzaj produktami",
               "url": "/manage/products/",
             },
             {
-              "title": "Sub-accounts",
+              "title": "Zarządzaj kontami",
               "url": "/manage/subAccounts/",
             }
           ]

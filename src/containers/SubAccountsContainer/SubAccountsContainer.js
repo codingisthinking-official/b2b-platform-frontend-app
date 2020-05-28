@@ -9,7 +9,6 @@ import { Table, Form, Alert, Button, Modal } from "react-bootstrap";
 
 import AuthenticationService from "../../services/AuthenticationService";
 
-import "./SubAccountsContainer.css";
 import SidebarContainer from "../SidebarContainer/SidebarContainer";
 
 class SubAccountsContainer extends Component {
@@ -128,7 +127,7 @@ class SubAccountsContainer extends Component {
       subAccounts = (<Table striped bordered hover>
         <thead>
         <tr>
-          <th>Account</th>
+          <th>Konto</th>
           <th></th>
         </tr>
         </thead>
@@ -137,7 +136,7 @@ class SubAccountsContainer extends Component {
         </tbody>
       </Table>);
     } else {
-      subAccounts = <Alert variant={"primary"}>No subaccounts added yet.</Alert>
+      subAccounts = <Alert variant={"primary"}>Nie dodałes jeszcze kont.</Alert>
     }
 
     let alerts = null;
@@ -152,35 +151,35 @@ class SubAccountsContainer extends Component {
       <div className={"container--with-sidebar"}>
         <SidebarContainer />
         <div className={"box-white"}>
-          <h1 className={"product--container-heading"}>Manage subaccounts</h1>
+          <h1 className={"product--container-heading"}>Zarządzaj kontami klientów</h1>
           {subAccounts}
-          <Button variant={"primary"} onClick={this.openAccountForm.bind(this)}>
-            Add a new subaccount
+          <Button variant={"info"} onClick={this.openAccountForm.bind(this)}>
+            Dodaj konto
           </Button>
           <Modal show={this.state.showModal} onHide={handleClose} animation={true}>
             <Modal.Header closeButton>
-              <Modal.Title>Add a new account</Modal.Title>
+              <Modal.Title>Dodawanie nowego konta</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Please, enter a name, e-mail address and initial password
-              so we can create a new sub-account.
+              Proszę, imię, adres e-mail oraz poczatkowe hasło
+              abyśmy mogli stworzyć konto dla Twojego partnera.
               <br/><br/>
               {alerts}
               <Form>
                 <Form.Group controlId="name">
-                  <Form.Label>Full name</Form.Label>
+                  <Form.Label>Imię i nazwisko</Form.Label>
                   <Form.Control onChange={(event) => {
                     this.setState({'name': event.target.value})
                   }} />
                 </Form.Group>
                 <Form.Group controlId="email">
-                  <Form.Label>E-mail Address</Form.Label>
+                  <Form.Label>E-mail</Form.Label>
                   <Form.Control onChange={(event) => {
                     this.setState({'email': event.target.value})
                   }} />
                 </Form.Group>
                 <Form.Group controlId="password">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>Hasło</Form.Label>
                   <Form.Control onChange={(event) => {
                     this.setState({'password': event.target.value})
                   }} />
@@ -189,7 +188,7 @@ class SubAccountsContainer extends Component {
             </Modal.Body>
             <Modal.Footer className={"modal__footer-line-light"}>
               <Button variant="secondary" onClick={handleClose}>
-                Cancel
+                Anuluj
               </Button>
               <Button variant="primary" onClick={(e) => {
                 this.createNewAccount(
@@ -198,7 +197,7 @@ class SubAccountsContainer extends Component {
                 e.preventDefault();
                 e.stopPropagation();
               }} disabled={this.state.selectedFile === ''}>
-                Save
+                Dodaj konto
               </Button>
             </Modal.Footer>
           </Modal>

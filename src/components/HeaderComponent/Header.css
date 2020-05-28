@@ -3,8 +3,22 @@ header {
   margin-bottom: 0;
 }
 
-.container-header .btn-logout {
-  margin-left: 10px;
+.container-header .user button,
+.container-header .user a {
+  margin-left: 7px;
+}
+
+.container-header .current--user {
+  position: relative;
+  top: 2px;
+  margin-right: 10px;
+  color: #fff;
+}
+
+.container-header-top {
+  background: #1B3954;
+  padding-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 header img {
@@ -21,8 +35,7 @@ header img {
 }
 
 .container-header {
-  background: #fff;
-  margin-bottom: 30px;
+  background: #f9f9f9;
 }
 
 @media screen and (min-width: 768px) {
@@ -35,11 +48,11 @@ header img {
   margin-top: 20px;
 }
 .search-mobile input[type=text] {
-  width: calc(100% - 110px);
+  width: calc(100% - 130px);
 }
 
 .search-mobile button {
-  width: 80px;
+  width: 100px;
   margin-left: 20px;
 }
 

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Form, FormControl, Button } from "react-bootstrap";
 
 import './NavMenuComponent.css';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSearch} from "@fortawesome/free-solid-svg-icons";
 
 class NavMenuComponent extends Component {
   constructor() {
@@ -25,10 +27,12 @@ class NavMenuComponent extends Component {
             e.preventDefault();
             e.stopPropagation();
           }}>
-            <FormControl type="text" placeholder="Search for a product" className="mr-sm-2" onChange={e => {
+            <FormControl type="text" placeholder="Szukaj produktu" className="mr-sm-4" onChange={e => {
               this.setState({"q": e.target.value});
             }}/>
-            <Button variant="primary" onClick={this.search.bind(this)}>Search</Button>
+            <Button variant="info" onClick={this.search.bind(this)}>
+              <FontAwesomeIcon icon={ faSearch } /> szukaj
+            </Button>
           </Form>
       </div>
     );

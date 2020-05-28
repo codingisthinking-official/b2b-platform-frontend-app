@@ -18,7 +18,7 @@ class CategorySidebarComponent extends Component {
           {i.children.map((c, index) => {
             if (this.props.current && c.slug === this.props.current) {
               return (<li key={index}>
-                <a href={c.url} title={c.title} class={"current"}>{c.title}</a>
+                <a href={c.url} title={c.title} className={"current"}>{c.title}</a>
               </li>);
             } else {
               return (<li key={index}>

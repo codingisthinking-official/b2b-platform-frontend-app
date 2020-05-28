@@ -1,8 +1,10 @@
 body, html {
   color: #fff;
-  background: #282C34;
+  /*background: #1B3954;*/
+  background: #16ADE1;
   font-size: 14px;
 }
 
 .container__main {
+  background: #fff;
 }

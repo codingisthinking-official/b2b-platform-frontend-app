@@ -10,13 +10,13 @@
 .box-white h1 {
   display: block;
   padding: 20px !important;;
-  border-bottom: 10px solid #282C34;
   text-transform: uppercase;
-  background: #000;
-  font-weight: 600 !important;
+  font-weight: 800 !important;
   font-size: 13px !important;
-  margin: -20px -20px 20px -20px !important;
   color: #fff;
+  background: #1B3954;
+  font-size: 13px;
+  margin: -20px -20px 20px -20px !important;
 }
 
 .box-white h2 {
@@ -31,15 +31,120 @@
   margin-top: 30px;
 }
 
-.box-white .price {
-  font-weight: 600;
-  text-decoration: underline;
-}
-
 .modal-content {
   color: #000;
 }
 
 .modal-footer.modal__footer-line-light {
   border-top: 1px solid #c2d6fc;
+}
+
+.product-box {
+  display: block;
+  font-size: 0;
+}
+
+.product-box .thumbnail {
+  width: 200px;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 20px;
+}
+
+.product-box .thumbnail img {
+  max-width: 100%;
+}
+
+.product-box .description {
+  width: calc(100% - 220px);
+  display: inline-block;
+  vertical-align: top;
+  font-size: 14px;
+}
+
+.product-box .description strong {
+  font-weight: 600;
+}
+
+.product-box .description .short-description {
+  padding: 10px;
+  background: #f9f9f9;
+}
+
+.product-box h3 {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px;
+  background: #f9f9f9;
+  margin: 20px 0;
+}
+
+.product-box .long-description {
+  font-size: 14px;
+}
+
+.product-box .order {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.product-box .order small {
+  font-size: 11px;
+  display: block;
+}
+
+.product-box .order small:after {
+  content: ")";
+}
+
+
+.product-box .order small:before {
+  content: "(";
+}
+
+.product-box .order .container-cart {
+  font-size: 0;
+  margin-top: 10px;
+}
+
+.product-box .order .container-cart .quantity {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.product-box .order .container-cart .quantity input {
+  height: 40px;
+  text-align: center;
+  width: 50px;
+  color: #1B3954;
+  border: 1px solid #1B3954;
+  font-size: 12px;
+}
+
+.product-box .order .container-cart .button {
+  width: 150px;
+  height: 40px;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  background: #1B3954;
+  vertical-align: top;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.product-box .order .container-cart .button a {
+  color: #fff;
+}
+
+.product-box .order .container-cart .added {
+  font-size: 12px;
+  text-align: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: #54801a;
+  padding: 10px 0;
+  color: #fff;
 }

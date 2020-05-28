@@ -26,11 +26,17 @@ import SubAccountsContainer
   from "./containers/SubAccountsContainer/SubAccountsContainer";
 import CategoryProducts
   from "./containers/CategoryProductsContainer/CategoryProducts";
+import SliderContainer from "./containers/SliderContainer/SliderContainer";
+import StaticPageContainer
+  from "./containers/StaticPageContainer/StaticPageContainer";
+import CartContainer from "./containers/CartContainer/CartContainer";
 
 class App extends React.Component {
   render() {
     let context = null;
     let loggedRouter = null;
+    let footerComponent = null;
+    let sliderContainer = null;
 
     if (!AuthenticationService.isAuthenticated()) {
       context = <Login />;
@@ -53,37 +59,48 @@ class App extends React.Component {
           });
         });
 
+      sliderContainer = <SliderContainer />;
+      footerComponent = <FooterComponent />;
       loggedRouter = (<Router>
         <Switch>
           <Route path="/manage/products/">
             <NavMenuComponent/>
             <ManageProductsContainer />
-            <FooterComponent/>
           </Route>
           <Route path="/manage/subAccounts/">
             <NavMenuComponent/>
             <SubAccountsContainer />
-            <FooterComponent/>
           </Route>
           <Route path="/products/search/:q/">
             <NavMenuComponent/>
             <SearchContainer />
-            <FooterComponent/>
           </Route>
           <Route path="/product/:productId/">
             <NavMenuComponent/>
             <ProductContainer />
-            <FooterComponent/>
           </Route>
           <Route path="/category/:category/">
             <NavMenuComponent/>
             <CategoryProducts />
-            <FooterComponent/>
+          </Route>
+          <Route path="/profile/invoices/">
+            <NavMenuComponent/>
+            <StaticPageContainer heading={"Moje faktury"} text={"Nie wystawiono żadnych faktur."} />
+            <CategoryProducts />
+          </Route>
+          <Route path="/profile/orders/">
+            <NavMenuComponent/>
+            <StaticPageContainer heading={"Moje zamówienia"} text={"Jeszcze nic nie zamówiłeś."} />
+            <CategoryProducts />
+          </Route>
+          <Route path="/cart/">
+            <NavMenuComponent/>
+            <CartContainer />
+            <CategoryProducts />
           </Route>
           <Route path="/">
             <NavMenuComponent/>
             <HomepageContainer />
-            <FooterComponent/>
           </Route>
         </Switch>
       </Router>);
@@ -92,10 +109,12 @@ class App extends React.Component {
     return (
       <div className="full-container">
         <Header />
+        {sliderContainer}
         <Container className={"container__main"}>
           {context}
           {loggedRouter}
         </Container>
+        {footerComponent}
       </div>
     );
   }

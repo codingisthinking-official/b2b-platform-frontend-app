@@ -17,6 +17,10 @@ class CategoryProducts extends Component {
   }
 
   componentDidMount() {
+    if (!this.props.match.params.category) {
+      return;
+    }
+
     const obj = {
       method: 'GET',
       headers: {

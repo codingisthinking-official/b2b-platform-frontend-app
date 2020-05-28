@@ -7,6 +7,13 @@ import './Header.css';
 import AuthenticationService from "../../services/AuthenticationService";
 import InstallPWAComponent from "../InstallPWAComponent/InstallPWAComponent";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faSearch,
+  faShoppingCart,
+  faSignOutAlt
+} from '@fortawesome/free-solid-svg-icons'
+
 class Header extends Component {
   logoutAction() {
     AuthenticationService.logout();
@@ -28,13 +35,22 @@ class Header extends Component {
       const user = AuthenticationService.getUser();
 
       if (user) {
-        auth = (<div className={"container"}>
-          <p className="user">
-            Logged as <strong>{user.name} ({user.email})</strong>
-            <Button className={"btn-logout"}
-                    onClick={this.logoutAction.bind(this)} variant={"secondary"}
-                    size={"sm"}>Logout</Button>
-          </p>
+        auth = (<div className={"container-header-top"}>
+          <div className={"container"}>
+            <p className="user">
+              <span className="current--user">
+                Zalogowany jako <strong>{user.name}</strong>
+              </span>
+              <Button href={"/cart/"} variant={"outline-info"} size={"md"}>
+                <FontAwesomeIcon icon={ faShoppingCart } />
+              </Button>
+              <Button className={"btn-logout"}
+                      onClick={this.logoutAction.bind(this)} variant={"outline-danger"}
+                      size={"md"}>
+                <FontAwesomeIcon icon={ faSignOutAlt } />
+              </Button>
+            </p>
+          </div>
         </div>);
 
         search = (<Form className={"search-mobile"} inline onSubmit={e => {
@@ -42,12 +58,24 @@ class Header extends Component {
           e.preventDefault();
           e.stopPropagation();
         }}>
-          <FormControl type="text" placeholder="Search for a product" className="mr-sm-2" onChange={e => {
+          <FormControl type="text" placeholder="Szukaj produktu" className="mr-sm-2" onChange={e => {
             this.setState({"q": e.target.value});
           }}/>
-          <Button variant="info" onClick={this.search.bind(this)}>Search</Button>
+          <Button variant="info" onClick={this.search.bind(this)}>
+            <FontAwesomeIcon icon={ faSearch } /> szukaj
+          </Button>
         </Form>);
       }
+    } else {
+      auth = (<div className={"container-header-top"}>
+        <div className="container">
+          <p className="user">
+            <span className="current--user">
+              Jeżeli nie masz konta na platformie, skontaktuj się z producentem - desk@codingisthinking.com
+            </span>
+          </p>
+        </div>
+      </div>);
     }
 
     homeScreenButton = (<InstallPWAComponent/>);
