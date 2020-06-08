@@ -6,9 +6,13 @@
   background: #fff;
 }
 
+.sidebar-mobile-icon {
+  display: none;
+}
+
 .category--sidebar h3 {
   display: block;
-  background: #1B3954;
+  background: #282c34;
   padding: 20px 15px;
   color: #fff;
   font-weight: 800;
@@ -17,7 +21,7 @@
   margin: 10px 0;
 }
 
-.category--sidebar .item:first-child h3 {
+.category--sidebar .item.first h3 {
   margin-top: 0;
 }
 
@@ -41,4 +45,32 @@
 .category--sidebar ul li a.current {
   text-decoration: underline;
   font-weight: 600;
+}
+
+@media screen and (max-width: 990px) {
+  .category--sidebar {
+    width: 100%;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  .sidebar-mobile-icon {
+    display: block;
+    text-align: right;
+    margin-bottom: 10px;
+  }
+  .sidebar-mobile-icon button {
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .category--sidebar .item {
+    border: 1px solid #1B3954;
+    padding: 0;
+  }
+  .category--sidebar h3 {
+    margin: 0;
+  }
+  .category--sidebar ul li a {
+    padding: 8px 15px;
+  }
 }

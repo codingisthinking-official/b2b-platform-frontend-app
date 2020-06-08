@@ -2,6 +2,12 @@
   position: relative;
   height: 75px;
   padding: 30px 0;
+  margin-top: 20px;
+}
+
+.top--search-navbar.navbar--supplier {
+  height: 0;
+  padding: 10px;
 }
 
 .top--search-navbar form {
@@ -10,8 +16,17 @@
   right: 0;
 }
 
+.search-desktop .input-search {
+  width: 300px;
+  margin-right: 10px;
+}
+
 @media screen and (max-width: 768px) {
   .search-desktop {
     display: none;
+  }
+  .top--search-navbar {
+    height: 1px;
+    padding: 10px;
   }
 }

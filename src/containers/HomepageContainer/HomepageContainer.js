@@ -12,6 +12,10 @@ class HomepageContainer extends Component {
     this.state = {
       'products': []
     };
+
+    if (AuthenticationService.isSupplier()) {
+      window.location.href = '/manage/products/';
+    }
   }
 
   componentDidMount() {

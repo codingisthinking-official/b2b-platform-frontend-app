@@ -19,6 +19,10 @@ class AuthenticationService {
     return JSON.parse(sessionStorage.getItem('userDetails'));
   }
 
+  isSupplier() {
+    return (this.getUser().type === 1);
+  }
+
   logout() {
     sessionStorage.setItem('jwtToken', '');
     sessionStorage.setItem('userDetails', JSON.stringify([]));

@@ -1,4 +1,4 @@
-.container__signin {
+.container__register {
   position: relative;
   background: #fff;
   padding: 20px 10px;
@@ -6,22 +6,22 @@
   margin: 20px auto;
 }
 
-.container__signin_form .form-group {
+.container__register .form-group {
   margin: 20px 0;
 }
 
 @media screen and (max-width: 750px) {
-  .container__signin {
+  .container__register {
     width: 100%;
   }
 }
 
-.container__signin .info__register {
+.container__register .info__register {
   font-size: 14px;
   margin-top: 20px;
 }
 
-.container__signin .loader {
+.container__register .loader {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -34,8 +34,9 @@
   z-index: 1024;
 }
 
-.container__signin h1 {
+.container__register h1 {
   font-weight: 400;
   font-size: 32px;
   color: #1B3954;
+  margin-bottom: 15px;
 }

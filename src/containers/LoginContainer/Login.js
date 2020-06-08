@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 
-import Button from 'react-bootstrap/Button';
-import Form from "react-bootstrap/Form";
-import Alert from "react-bootstrap/Alert";
+import { Alert, Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faLock, faSpinner} from '@fortawesome/free-solid-svg-icons'
 import AuthenticationService from "../../services/AuthenticationService";
@@ -71,7 +69,7 @@ class Login extends Component {
     let loading = null;
 
     if (this.state.error) {
-      error = (<Alert variant={"danger"}>Niepoprawny e-mail lub hasło.</Alert>);
+      error = (<Alert variant={"danger"}>Invalid e-mail address or password.</Alert>);
     }
 
     if (this.state.loading) {
@@ -81,28 +79,24 @@ class Login extends Component {
     }
 
     return (<div className={"container container__signin"}>
-      <h1 className={"display_1"}>Zaloguj się</h1>
+      <h1 className={"display_1"}>Sign in</h1>
       {loading}
       {error}
-      <Form className={"container__signin_form"} autoComplete={"false"} onSubmit={this.sendLoginRequest.bind(this)}>
+      <Form className={"container__signin_form"} autoComplete={"off"} onSubmit={this.sendLoginRequest.bind(this)}>
         <Form.Group controlId="email">
-          <Form.Label>Adres e-mail</Form.Label>
-          <Form.Control type="email" placeholder="Adres e-mail" onChange={ (e) => this.setState({ username: e.target.value }) } />
+          <Form.Label>E-mail address</Form.Label>
+          <Form.Control type="email" placeholder="E-mail address" autoComplete={"off"} onChange={ (e) => this.setState({ username: e.target.value }) } />
         </Form.Group>
         <Form.Group controlId="password">
-          <Form.Label>Hasło</Form.Label>
-          <Form.Control type="password" placeholder="Hasło" onChange={ (e) => this.setState({ password: e.target.value }) }/>
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" autoComplete={"off"} onChange={ (e) => this.setState({ password: e.target.value }) }/>
         </Form.Group>
-        <Button variant="info" type="submit">
-          <FontAwesomeIcon icon={ faLock } /> zaloguj się
+        <Button variant="primary" type="submit">
+          <FontAwesomeIcon icon={ faLock } /> Sign In
         </Button>
-        {/*<div className="info__register">*/}
-        {/*  If you don't have account yet, you can register a new one by <a href="/register/" onClick={(e)=> {*/}
-        {/*    alert('Not implemented yet.');*/}
-        {/*    e.preventDefault();*/}
-        {/*    e.stopPropagation();*/}
-        {/*}}>clicking here</a>.*/}
-        {/*</div>*/}
+        <div className="info__register">
+          If you don't have account yet, you can register a new one by <Button href="/register/" size={"sm"} variant={"outline-primary"}>clicking here</Button>
+        </div>
       </Form>
     </div>);
   }

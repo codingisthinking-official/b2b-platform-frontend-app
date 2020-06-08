@@ -4,6 +4,7 @@ import { Form, FormControl, Button } from "react-bootstrap";
 import './NavMenuComponent.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
+import AuthenticationService from "../../services/AuthenticationService";
 
 class NavMenuComponent extends Component {
   constructor() {
@@ -20,6 +21,13 @@ class NavMenuComponent extends Component {
   }
 
   render() {
+    if (AuthenticationService.isSupplier()) {
+      return (
+        <div className={"top--search-navbar navbar--supplier"}>
+        </div>
+      );
+    }
+
     return (
       <div className={"top--search-navbar"}>
           <Form className={"search-desktop"} inline onSubmit={e => {
@@ -27,11 +35,11 @@ class NavMenuComponent extends Component {
             e.preventDefault();
             e.stopPropagation();
           }}>
-            <FormControl type="text" placeholder="Szukaj produktu" className="mr-sm-4" onChange={e => {
+            <FormControl type="text" placeholder="Search product" className="input-search" onChange={e => {
               this.setState({"q": e.target.value});
             }}/>
-            <Button variant="info" onClick={this.search.bind(this)}>
-              <FontAwesomeIcon icon={ faSearch } /> szukaj
+            <Button variant="primary" onClick={this.search.bind(this)}>
+              <FontAwesomeIcon icon={ faSearch } /> search
             </Button>
           </Form>
       </div>

@@ -4,6 +4,13 @@
   vertical-align: top;
 }
 
+@media screen and (max-width: 990px) {
+  .product-container {
+    width: 100%;
+    display: block;
+  }
+}
+
 .product-container .product {
   background: #fff;
   padding: 15px 10px;
@@ -24,7 +31,7 @@
 }
 
 .product-container .product .price {
-  background: #1B3954;
+  background: #282c34;
   padding: 10px;
   margin: 10px -10px 10px -10px;
   color: #fff;
@@ -55,7 +62,7 @@
   height: 40px;
   text-align: center;
   width: 50px;
-  color: #000;
+  color: #282c34;
   border: 1px solid #666;
   font-size: 12px;
 }
@@ -115,7 +122,7 @@
 
 .product-container .product p {
   display: block;
-  margin: 0 0 15px 0;
+  margin: 0 0 5px 0;
   font-size: 12px;
   color: #666;
 }
@@ -126,7 +133,7 @@
 
 .product-container .product--container-heading {
   display: block;
-  background: #1B3954;
+  background: #282c34;
   padding: 20px 10px;
   color: #fff;
   font-weight: 800;

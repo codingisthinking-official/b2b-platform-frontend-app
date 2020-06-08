@@ -7,6 +7,13 @@
   color: #000;
 }
 
+@media screen and (max-width: 990px) {
+  .box-white {
+    width: 100%;
+    display: block;
+  }
+}
+
 .box-white h1 {
   display: block;
   padding: 20px !important;;
@@ -14,7 +21,7 @@
   font-weight: 800 !important;
   font-size: 13px !important;
   color: #fff;
-  background: #1B3954;
+  background: #282c34;
   font-size: 13px;
   margin: -20px -20px 20px -20px !important;
 }

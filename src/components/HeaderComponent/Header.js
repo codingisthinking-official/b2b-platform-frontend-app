@@ -30,6 +30,7 @@ class Header extends Component {
     let auth = null;
     let search = null;
     let homeScreenButton = null;
+    let homepageLink = "/";
 
     if (AuthenticationService.isAuthenticated()) {
       const user = AuthenticationService.getUser();
@@ -39,7 +40,7 @@ class Header extends Component {
           <div className={"container"}>
             <p className="user">
               <span className="current--user">
-                Zalogowany jako <strong>{user.name}</strong>
+                Welcome, <strong>{user.name}</strong>
               </span>
               <Button href={"/cart/"} variant={"outline-info"} size={"md"}>
                 <FontAwesomeIcon icon={ faShoppingCart } />
@@ -53,25 +54,30 @@ class Header extends Component {
           </div>
         </div>);
 
-        search = (<Form className={"search-mobile"} inline onSubmit={e => {
-          this.search();
-          e.preventDefault();
-          e.stopPropagation();
-        }}>
-          <FormControl type="text" placeholder="Szukaj produktu" className="mr-sm-2" onChange={e => {
-            this.setState({"q": e.target.value});
-          }}/>
-          <Button variant="info" onClick={this.search.bind(this)}>
-            <FontAwesomeIcon icon={ faSearch } /> szukaj
-          </Button>
-        </Form>);
+        if (!AuthenticationService.isSupplier()) {
+          search = (<Form className={"search-mobile"} inline onSubmit={e => {
+            this.search();
+            e.preventDefault();
+            e.stopPropagation();
+          }}>
+            <FormControl type="text" placeholder="Search product"
+                         className="mr-sm-4" onChange={e => {
+              this.setState({"q": e.target.value});
+            }}/>
+            <Button variant="primary" onClick={this.search.bind(this)}>
+              <FontAwesomeIcon icon={faSearch}/> search
+            </Button>
+          </Form>);
+        } else {
+          homepageLink = "/manage/products/";
+        }
       }
     } else {
       auth = (<div className={"container-header-top"}>
         <div className="container">
           <p className="user">
             <span className="current--user">
-              Jeżeli nie masz konta na platformie, skontaktuj się z producentem - desk@codingisthinking.com
+              If you don't have an account on the platform you can either use registration form or contact the administrator at desk@codingisthinking.com
             </span>
           </p>
         </div>
@@ -85,7 +91,7 @@ class Header extends Component {
         {homeScreenButton}
         {auth}
         <header className={"container"} style={{'textAlign': (this.props.center ? 'center' : '')}}>
-          <a href={"/"} title="Homepage">
+          <a href={homepageLink} title="Homepage">
             <img src={logo} alt={"B2B CodingIsThinking"} />
           </a>
           {search}

@@ -81,7 +81,7 @@ class ManageProductsContainer extends Component {
   }
 
   render() {
-    let products = (<Alert variant={"primary"}>Nie dodano jeszcze produktów.</Alert>);
+    let products = (<Alert variant={"primary"}>No products added yet.</Alert>);
 
     if (this.state.products.length > 0) {
       const cols = this.state.products.map((p, i) => {
@@ -90,8 +90,10 @@ class ManageProductsContainer extends Component {
           <td>
             <strong>{p.name}</strong>
             <br/>
-            cena: {p.price.toFixed(2)} zł netto
-            </td>
+            €{p.price.toFixed(2)}
+            <br/>
+            Location: {p.location}
+          </td>
           <td>
             <Button variant={"danger"} size={"sm"} onClick={(e) => {
               this.removeProduct(p);
@@ -108,7 +110,7 @@ class ManageProductsContainer extends Component {
         <thead>
           <tr>
             <th>#</th>
-            <th>Nazwa produktu</th>
+            <th>Product name</th>
             <th></th>
           </tr>
         </thead>
@@ -132,28 +134,29 @@ class ManageProductsContainer extends Component {
         <SidebarContainer />
         <div className={"box-white"}>
           {fileUploadedAlert}
-          <h1>Zarządzanie listą produktów</h1>
-          <h2>Dodaj nowy produkt</h2>
-          <strong>Pobierz plik Excel</strong>, uzupełnij go według szablonu i wgraj go do platformy,
-          aby dodać nowe produkty.
+          <h1>My Products</h1>
+          <h2>Add new product</h2>
+          <strong>Download the example Excel file</strong>,
+          then attach your new products to the file and upload it back
+          so we can add your products to the platform.
           <br/>
           <br/>
-          <Button variant={"secondary"} href={"/vendors/sample-import.xlsx"}>Pobierz przykładowy szablon Excel</Button>
+          <Button variant={"secondary"} href={"/vendors/sample-import.xlsx"}>Download the Excel template file</Button>
           <br/>
           <br/>
           <Button onClick={(e) => {
             this.setState({
               'showModal': true
             });
-          }} variant={"info"}>Importuj produkty</Button>
-          <h2>Wszystkie produkty</h2>
+          }} variant={"info"}>Import products</Button>
+          <h2>Your stock</h2>
           {products}
           <Modal show={this.state.showModal} onHide={handleClose} animation={true}>
             <Modal.Header closeButton>
-              <Modal.Title>Import produktów</Modal.Title>
+              <Modal.Title>Import products</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Proszę, <strong>upuść tutaj</strong> swój plik Excel, a my przetworzymy go na platformie i dodamy Twoje produkty do bazy.
+              <strong>Drop your Excel file here</strong> so we can process it immediately and add them to the platform.
               <br/><br/>
               <Form>
                 <Form.Group controlId="upload">
@@ -165,7 +168,7 @@ class ManageProductsContainer extends Component {
             </Modal.Body>
             <Modal.Footer className={"modal__footer-line-light"}>
               <Button variant="secondary" onClick={handleClose}>
-                Anuluj
+                Cancel
               </Button>
               <Button variant="primary" onClick={(e) => {
                 const data = new FormData()
@@ -175,7 +178,7 @@ class ManageProductsContainer extends Component {
                 e.preventDefault();
                 e.stopPropagation();
               }} disabled={this.state.selectedFile === ''}>
-                Rozpocznij import
+                Start import
               </Button>
             </Modal.Footer>
           </Modal>

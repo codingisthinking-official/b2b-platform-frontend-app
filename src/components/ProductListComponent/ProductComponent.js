@@ -24,7 +24,7 @@ class ProductComponent extends Component {
     let buttonAddToCart = (
       <div className="container-cart">
         <div className="quantity">
-          <input type={"text"} value={this.state.quantity} onChange={(e) => {
+          <input type={"text"} value={this.state.quantity} readOnly={true} onChange={(e) => {
             this.setState({
               'quantity': parseInt(e.target.value)
             });
@@ -37,7 +37,7 @@ class ProductComponent extends Component {
             e.preventDefault();
             e.stopPropagation();
           }}>
-            do koszyka
+            add to cart
           </a>
         </div>
       </div>
@@ -46,7 +46,7 @@ class ProductComponent extends Component {
     if (this.added || CartService.alreadyInCart(this.props.product)) {
       buttonAddToCart = (
         <div className="container-cart">
-          <div className={"added"}>produkt w koszyku</div>
+          <div className={"added"}>added to cart</div>
         </div>
       );
     }
@@ -57,15 +57,15 @@ class ProductComponent extends Component {
           {this.props.product.name}
         </a>
       </h4>
-      <p>{this.props.product.ean}</p>
+      <p>EAN: {this.props.product.ean}</p>
+      <p class={"location"}><strong>Location</strong>: {this.props.product.location}</p>
       <img src={ photo } alt={this.props.product.name}/>
       <div className="price">
         <div className="your-price">
-          cena
+          price
         </div>
         <div className="price-value">
-          {this.props.product.price.toFixed(2)} zł netto<br/>
-          {(this.props.product.price * 1.23).toFixed(2)} zł brutto
+          €{this.props.product.price.toFixed(2)}
         </div>
       </div>
       {buttonAddToCart}

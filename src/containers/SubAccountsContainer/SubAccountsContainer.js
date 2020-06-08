@@ -136,7 +136,7 @@ class SubAccountsContainer extends Component {
         </tbody>
       </Table>);
     } else {
-      subAccounts = <Alert variant={"primary"}>Nie dodałes jeszcze kont.</Alert>
+      subAccounts = <Alert variant={"primary"}>No sub-accounts added yet.</Alert>
     }
 
     let alerts = null;
@@ -151,23 +151,23 @@ class SubAccountsContainer extends Component {
       <div className={"container--with-sidebar"}>
         <SidebarContainer />
         <div className={"box-white"}>
-          <h1 className={"product--container-heading"}>Zarządzaj kontami klientów</h1>
+          <h1 className={"product--container-heading"}>Sub-account management</h1>
           {subAccounts}
-          <Button variant={"info"} onClick={this.openAccountForm.bind(this)}>
-            Dodaj konto
+          <Button variant={"primary"} onClick={this.openAccountForm.bind(this)}>
+            Add new sub-account
           </Button>
           <Modal show={this.state.showModal} onHide={handleClose} animation={true}>
             <Modal.Header closeButton>
-              <Modal.Title>Dodawanie nowego konta</Modal.Title>
+              <Modal.Title>Add new sub-account</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Proszę, imię, adres e-mail oraz poczatkowe hasło
-              abyśmy mogli stworzyć konto dla Twojego partnera.
+              Please, add name, e-mail address and an initial password
+              so we can create an account for your partner.
               <br/><br/>
               {alerts}
               <Form>
                 <Form.Group controlId="name">
-                  <Form.Label>Imię i nazwisko</Form.Label>
+                  <Form.Label>Name</Form.Label>
                   <Form.Control onChange={(event) => {
                     this.setState({'name': event.target.value})
                   }} />
@@ -179,7 +179,7 @@ class SubAccountsContainer extends Component {
                   }} />
                 </Form.Group>
                 <Form.Group controlId="password">
-                  <Form.Label>Hasło</Form.Label>
+                  <Form.Label>Password</Form.Label>
                   <Form.Control onChange={(event) => {
                     this.setState({'password': event.target.value})
                   }} />
@@ -188,7 +188,7 @@ class SubAccountsContainer extends Component {
             </Modal.Body>
             <Modal.Footer className={"modal__footer-line-light"}>
               <Button variant="secondary" onClick={handleClose}>
-                Anuluj
+                Cancel
               </Button>
               <Button variant="primary" onClick={(e) => {
                 this.createNewAccount(
@@ -197,7 +197,7 @@ class SubAccountsContainer extends Component {
                 e.preventDefault();
                 e.stopPropagation();
               }} disabled={this.state.selectedFile === ''}>
-                Dodaj konto
+                Create account
               </Button>
             </Modal.Footer>
           </Modal>

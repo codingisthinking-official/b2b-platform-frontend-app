@@ -26,20 +26,30 @@ import SubAccountsContainer
   from "./containers/SubAccountsContainer/SubAccountsContainer";
 import CategoryProducts
   from "./containers/CategoryProductsContainer/CategoryProducts";
-import SliderContainer from "./containers/SliderContainer/SliderContainer";
 import StaticPageContainer
   from "./containers/StaticPageContainer/StaticPageContainer";
 import CartContainer from "./containers/CartContainer/CartContainer";
+import RegisterContainer
+  from "./containers/RegisterContainer/RegisterContainer";
 
 class App extends React.Component {
   render() {
     let context = null;
     let loggedRouter = null;
-    let footerComponent = null;
-    let sliderContainer = null;
+    let footerComponent = <FooterComponent />
 
     if (!AuthenticationService.isAuthenticated()) {
-      context = <Login />;
+      context = (<Router>
+        <Switch>
+          <Route path="/register/">
+            <RegisterContainer />
+          </Route>
+          <Route path="/">
+            <Login />
+          </Route>
+
+        </Switch>
+      </Router>);
     } else {
       const obj = {
         method: 'GET',
@@ -59,8 +69,6 @@ class App extends React.Component {
           });
         });
 
-      sliderContainer = <SliderContainer />;
-      footerComponent = <FooterComponent />;
       loggedRouter = (<Router>
         <Switch>
           <Route path="/manage/products/">
@@ -109,7 +117,6 @@ class App extends React.Component {
     return (
       <div className="full-container">
         <Header />
-        {sliderContainer}
         <Container className={"container__main"}>
           {context}
           {loggedRouter}
