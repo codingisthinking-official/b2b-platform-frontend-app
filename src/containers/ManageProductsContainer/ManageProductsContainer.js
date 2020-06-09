@@ -124,7 +124,7 @@ class ManageProductsContainer extends Component {
 
     if (this.state.fileUploaded) {
       fileUploadedAlert = (<Alert variant={"primary"}>
-        Twój plik zostaje przetwarzany. Prosimy o chwilę cierpliwości.
+        Your file is being processed. It may take a while.
       </Alert>)
     }
 
@@ -133,8 +133,8 @@ class ManageProductsContainer extends Component {
       <div className={"container--with-sidebar"}>
         <SidebarContainer />
         <div className={"box-white"}>
-          {fileUploadedAlert}
           <h1>My Products</h1>
+          {fileUploadedAlert}
           <h2>Add new product</h2>
           <strong>Download the example Excel file</strong>,
           then attach your new products to the file and upload it back

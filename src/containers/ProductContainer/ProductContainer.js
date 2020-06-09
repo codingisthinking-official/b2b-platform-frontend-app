@@ -88,15 +88,16 @@ class ProductContainer extends Component {
           <div className="product-box">
             <div className="thumbnail">
               <img src={ photo } alt={this.state.product.name}/>
-              <div className="order">
-                price: €{this.state.product.price}
-                {buttonAddToCart}
-              </div>
             </div>
             <div className="description">
               <p><strong>Product:</strong> {this.state.product.name}</p>
               <p><strong>EAN:</strong> {this.state.product.ean}</p>
               <p><strong>Location:</strong> {this.state.product.location}</p>
+              <br/>
+              <div className="order">
+                Price: €{this.state.product.price}
+                {buttonAddToCart}
+              </div>
             </div>
           </div>
         </div>

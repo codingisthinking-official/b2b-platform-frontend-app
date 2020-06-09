@@ -21,7 +21,7 @@ class CartContainer extends Component {
 
   render() {
     if (!this.state.items) {
-      return <StaticPageContainer heading={"Koszyk"} text={"Brak produktów w koszyku"} />;
+      return <StaticPageContainer heading={"Koszyk"} text={"No items in your cart yet."} />;
     }
 
     return <CartComponent items={this.state.items} parent={this} />;

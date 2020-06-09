@@ -1,17 +1,112 @@
 import React, { Component } from "react";
+import config from "../../config";
 import './CartComponent.css';
-import SidebarContainer
-  from "../../containers/SidebarContainer/SidebarContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import stripeLogo from "./stripe-logo.png";
+
 import {
   faCreditCard,
-  faShoppingCart,
   faTrash
 } from "@fortawesome/free-solid-svg-icons";
+
 import { Table, Button, Alert, Form, Row, Col } from "react-bootstrap";
 import noPhotoImage from "../ProductListComponent/no-photo.svg";
+import AuthenticationService from "../../services/AuthenticationService";
+import SidebarContainer from "../../containers/SidebarContainer/SidebarContainer";
+import CartService from "../../services/CartService";
 
 class CartComponent extends Component {
+  constructor() {
+    super();
+    this.state = {
+      address: {
+        name: "",
+        postal_code: "",
+        city: "",
+        street: "",
+        country: "United Kingdom"
+      },
+      errors: null
+    }
+  }
+
+  sendOrder() {
+    let requestBody = {
+      "products": this.props.items.map((i) => {
+        return {
+          "product_id": i.product.id,
+          "quantity": i.quantity
+        };
+      }),
+      "delivery": {
+        "method": "express",
+        "address": this.state.address
+      }
+    };
+    const obj = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + AuthenticationService.getJwtToken(),
+      },
+      body: JSON.stringify(requestBody),
+    };
+    fetch(config.api_url + '/api/order/', obj)
+      .then(res => {
+        if (res.ok) {
+          res.json().then((e) => {
+            CartService.refine();
+            window.location.href = '/profile/orders/';
+          });
+        } else {
+          res.json().then((r) => {
+            this.setState({
+              errors: r
+            });
+          });
+        }
+      });
+  }
+
+  hasError(errors, key) {
+    let hasErrors = false;
+
+    if (!errors) {
+      return false;
+    }
+
+    let error = errors.filter((e) => {
+      return e.property_path === key;
+    });
+
+    if (error.length > 0) {
+      hasErrors = true;
+    }
+
+    return hasErrors;
+  }
+
+  displayErrors(errors, key) {
+    let errorContainer = null;
+
+    if (!errors) {
+      return null;
+    }
+
+    let error = errors.filter((e) => {
+      return e.property_path === key;
+    });
+
+    if (error.length > 0) {
+      return (<Form.Control.Feedback type="invalid">
+        {error[0].message}
+      </Form.Control.Feedback>);
+    }
+
+    return errorContainer;
+  }
+
   render() {
     if (!this.props.items) {
       return null;
@@ -77,7 +172,7 @@ class CartComponent extends Component {
                 <div>
                   <Form.Group controlId="exampleForm.SelectCustom">
                     <Form.Label><strong>Delivery method</strong></Form.Label>
-                    <Form.Control as="select" custom readOnly={true}>
+                    <Form.Control as="select">
                       <option>Express Service</option>
                     </Form.Control>
                   </Form.Group>
@@ -87,35 +182,87 @@ class CartComponent extends Component {
                 <h3>2. Delivery Address</h3>
                 <Form.Group controlId="name">
                   <Form.Label>Name</Form.Label>
-                  <Form.Control type="text"/>
+                  <Form.Control isInvalid={this.hasError(this.state.errors, 'delivery.address.name')} type="text" value={this.state.address.name} onChange={(e) => {
+                    let currentStateAddress = this.state.address;
+                    currentStateAddress.name = e.target.value;
+                    this.setState({
+                      "address": currentStateAddress
+                    });
+                  }}/>
+                  {this.displayErrors(this.state.errors, 'delivery.address.name')}
                 </Form.Group>
                 <Form.Group controlId="zip">
                   <Form.Label>Postal code</Form.Label>
-                  <Form.Control type="text"/>
+                  <Form.Control isInvalid={this.hasError(this.state.errors, 'delivery.address.postalCode')} type="text" value={this.state.address.postal_code} onChange={(e) => {
+                    let currentStateAddress = this.state.address;
+                    currentStateAddress.postal_code = e.target.value;
+                    this.setState({
+                      "address": currentStateAddress
+                    });
+                  }}/>
+                  {this.displayErrors(this.state.errors, 'delivery.address.postalCode')}
                 </Form.Group>
                 <Form.Group controlId="city">
                   <Form.Label>City or town</Form.Label>
-                  <Form.Control type="text"/>
+                  <Form.Control isInvalid={this.hasError(this.state.errors, 'delivery.address.city')} type="text" value={this.state.address.city} onChange={(e) => {
+                    let currentStateAddress = this.state.address;
+                    currentStateAddress.city = e.target.value;
+                    this.setState({
+                      "address": currentStateAddress
+                    });
+                  }}/>
+                  {this.displayErrors(this.state.errors, 'delivery.address.city')}
                 </Form.Group>
                 <Form.Group controlId="street">
                   <Form.Label>Street and number</Form.Label>
-                  <Form.Control type="text"/>
+                  <Form.Control isInvalid={this.hasError(this.state.errors, 'delivery.address.street')} type="text" value={this.state.address.street} onChange={(e) => {
+                    let currentStateAddress = this.state.address;
+                    currentStateAddress.street = e.target.value;
+                    this.setState({
+                      "address": currentStateAddress
+                    });
+                  }}/>
+                  {this.displayErrors(this.state.errors, 'delivery.address.street')}
                 </Form.Group>
                 <Form.Group controlId="country">
                   <Form.Label>Country</Form.Label>
-                  <Form.Control type="text" value={"United Kingdom"}/>
+                  <Form.Control type="text" value={this.state.address.country} onChange={(e) => {
+                    let currentStateAddress = this.state.address;
+                    currentStateAddress.country = e.target.value;
+                    this.setState({
+                      "address": currentStateAddress
+                    });
+                  }}/>
                 </Form.Group>
               </Col>
             </Row>
+            <h3>3. Invoice data & payment</h3>
+            <div>
+              Your VAT number, company name and address will be taken from your profile.
+              You can change it in <a href={"/profile/edit/"}>edit profile section</a>.
+
+              <br/><br/>
+
+              Your order will be automatically paid via Stripe.
+              You need to have your Credit card connected <a href={"/profile/edit/"}>in your profile section</a>.
+            </div>
             <div className="text-right">
               <br/>
-              <Button variant="info" type="submit" onClick={(e) => {
-                alert('to do.');
+              <Button disabled={this.props.items.length === 0} variant="info" type="submit" onClick={(e) => {
+                this.sendOrder();
                 e.preventDefault();
                 e.stopPropagation();
               }}>
                 <FontAwesomeIcon icon={ faCreditCard } /> &nbsp;pay & order now
               </Button>
+              <br/><br/>
+              Payment provider:
+              <img src={stripeLogo} alt={"Stripe payments"} className={"stripe-payment-logo"} style={{
+                "height": "30px",
+                "margin-left": "20px",
+                "position": "relative",
+                "top": "-2px"
+              }}/>
             </div>
           </Form>
         </div>

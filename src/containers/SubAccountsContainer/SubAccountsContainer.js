@@ -8,7 +8,6 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Table, Form, Alert, Button, Modal } from "react-bootstrap";
 
 import AuthenticationService from "../../services/AuthenticationService";
-
 import SidebarContainer from "../SidebarContainer/SidebarContainer";
 
 class SubAccountsContainer extends Component {
@@ -127,7 +126,7 @@ class SubAccountsContainer extends Component {
       subAccounts = (<Table striped bordered hover>
         <thead>
         <tr>
-          <th>Konto</th>
+          <th>Account</th>
           <th></th>
         </tr>
         </thead>

@@ -31,6 +31,9 @@ import StaticPageContainer
 import CartContainer from "./containers/CartContainer/CartContainer";
 import RegisterContainer
   from "./containers/RegisterContainer/RegisterContainer";
+import ProfileOrdersContainer from "./containers/ProfileOrdersContainer/ProfileOrdersContainer";
+import ProfileEditContainer
+  from "./containers/ProfileEditContainer/ProfileEditContainer";
 
 class App extends React.Component {
   render() {
@@ -93,12 +96,17 @@ class App extends React.Component {
           </Route>
           <Route path="/profile/invoices/">
             <NavMenuComponent/>
-            <StaticPageContainer heading={"Moje faktury"} text={"Nie wystawiono żadnych faktur."} />
+            <StaticPageContainer heading={"My invoices"} text={"No invoices yet."} />
             <CategoryProducts />
           </Route>
           <Route path="/profile/orders/">
             <NavMenuComponent/>
-            <StaticPageContainer heading={"Moje zamówienia"} text={"Jeszcze nic nie zamówiłeś."} />
+            <ProfileOrdersContainer />
+            <CategoryProducts />
+          </Route>
+          <Route path="/profile/edit/">
+            <NavMenuComponent/>
+            <ProfileEditContainer />
             <CategoryProducts />
           </Route>
           <Route path="/cart/">

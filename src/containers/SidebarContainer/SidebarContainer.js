@@ -5,7 +5,6 @@ import AuthenticationService from "../../services/AuthenticationService";
 
 import CategorySidebarComponent
   from "../../components/CategorySidebarComponent/CategorySidebarComponent";
-import config from "../../config";
 
 class SidebarContainer extends Component {
   constructor() {
@@ -16,10 +15,10 @@ class SidebarContainer extends Component {
       items.push({
         "title": "Manage your stock",
         "children": [
-          {
-            "title": "Manage categories",
-            "url": "/manage/categories/",
-          },
+          // {
+          //   "title": "Manage categories",
+          //   "url": "/manage/categories/",
+          // },
           {
             "title": "Manage products",
             "url": "/manage/products/",
@@ -41,8 +40,13 @@ class SidebarContainer extends Component {
       });
     } else {
       items.push({
-        "title": "Categories",
-        "children": []
+        "title": "Stock on Fire",
+        "children": [
+          {
+            "title": "See products",
+            "url": "/"
+          }
+        ]
       });
       items.push({
         "title": "Account Management",
@@ -70,35 +74,34 @@ class SidebarContainer extends Component {
   }
 
   componentDidMount() {
-    const obj = {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
-      }
-    };
-
-    if (!AuthenticationService.isSupplier()) {
-      fetch(config.api_url + '/api/category/tree/', obj)
-        .then(r => {
-          r.json().then(r => {
-            let items = this.state.items;
-            let children = [];
-            r.forEach((i) => {
-              children.push({
-                title: i.name,
-                slug: i.slug,
-                url: "/category/" + i.slug + "/"
-              });
-            });
-
-            items[0].children = children;
-
-            this.setState({'items': items});
-          });
-        });
-    }
+    // const obj = {
+    //   method: 'GET',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
+    //   }
+    // };
+    // if (!AuthenticationService.isSupplier()) {
+    //   fetch(config.api_url + '/api/category/tree/', obj)
+    //     .then(r => {
+    //       r.json().then(r => {
+    //         let items = this.state.items;
+    //         let children = [];
+    //         r.forEach((i) => {
+    //           children.push({
+    //             title: i.name,
+    //             slug: i.slug,
+    //             url: "/category/" + i.slug + "/"
+    //           });
+    //         });
+    //
+    //         items[0].children = children;
+    //
+    //         this.setState({'items': items});
+    //       });
+    //     });
+    // }
   }
 
   render() {
