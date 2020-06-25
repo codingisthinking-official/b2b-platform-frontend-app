@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import config from "../../config";
 import AuthenticationService from "../../services/AuthenticationService";
 import { withRouter } from "react-router-dom";
-import { Alert, Table } from "react-bootstrap";
+import { Alert, Table, Button } from "react-bootstrap";
 import SidebarContainer from "../SidebarContainer/SidebarContainer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+
+import "./ProfileOrdersContainer.css";
 
 class ProfileOrdersContainer extends Component {
   constructor() {
@@ -36,6 +40,23 @@ class ProfileOrdersContainer extends Component {
         });
   }
 
+  payOrder(order) {
+    fetch(config.api_url + '/api/payment/create/', {
+      method: 'POST',
+      body: JSON.stringify({
+        order: order.id
+      }),
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
+      }
+    }).then(res => {
+      if (res.ok) {
+        this.fetchOrders();
+      }
+    });
+  }
+
   render() {
     let alert = null;
     let ordersTable = null;
@@ -63,16 +84,32 @@ class ProfileOrdersContainer extends Component {
           </div>
         );
 
-//         const invoiceAddress = (<div></div>);
+        let paymentStatus = (<FontAwesomeIcon icon={ faCheck } className="paid"/>);
+
+        if (o.paid === false) {
+          paymentStatus = (
+            <div>
+              <FontAwesomeIcon icon={ faTimes } className="unpaid" />
+              <br/>
+              <Button size={"sm"} variant={"outline-primary"} onClick={(e) => {
+                this.payOrder(o);
+
+                e.preventDefault();
+                e.stopPropagation();
+              }}>Pay for the order</Button>
+            </div>
+          );
+        }
         return (<tr key={i}>
           <td>{o.id}</td>
           <td>
-          <strong>Products:</strong><br/>
-          {products}<br/>
-          <strong>Delivery Address:</strong><br/>
-          {deliveryAddress}<br/>
-{/*           <strong>Invoice Address:</strong><br/> */}
-{/*           {invoiceAddress} */}
+            <strong>Products:</strong><br/>
+            {products}<br/>
+            <strong>Delivery Address:</strong><br/>
+            {deliveryAddress}<br/>
+          </td>
+          <td className={"payment-status"}>
+            {paymentStatus}
           </td>
         </tr>);
       });
@@ -82,6 +119,7 @@ class ProfileOrdersContainer extends Component {
           <tr>
             <th>Order no</th>
             <th>Your order</th>
+            <th>Payment status</th>
           </tr>
         </thead>
         <tbody>

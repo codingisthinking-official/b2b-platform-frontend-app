@@ -1,0 +1,11 @@
+.payment-status svg {
+  font-size: 24px;
+}
+
+.payment-status .paid {
+  color: #54801a;
+}
+
+.payment-status .unpaid {
+  color: #cc0000;
+}

@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { Button, Alert, Table, Modal, Form } from "react-bootstrap";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faIndent } from '@fortawesome/free-solid-svg-icons'
 
 import config from "../../config";
 import SidebarContainer from "../SidebarContainer/SidebarContainer";
 import AuthenticationService from "../../services/AuthenticationService";
+
+import "./ManageProductsContainer.css";
 
 class ManageProductsContainer extends Component {
   constructor() {
@@ -85,6 +87,7 @@ class ManageProductsContainer extends Component {
 
     if (this.state.products.length > 0) {
       const cols = this.state.products.map((p, i) => {
+        let url = '/manage/products/' + p.id + '/edit/';
         return (<tr key={i}>
           <td>{p.id}</td>
           <td>
@@ -95,12 +98,15 @@ class ManageProductsContainer extends Component {
             Location: {p.location}
           </td>
           <td>
+            <Button href={url} className={"button-edit"} variant={"primary"} size={"sm"}>
+              <FontAwesomeIcon icon={ faIndent } /> edit
+            </Button>
             <Button variant={"danger"} size={"sm"} onClick={(e) => {
               this.removeProduct(p);
               e.preventDefault();
               e.stopPropagation();
             }}>
-              <FontAwesomeIcon icon={ faTrash } />
+              <FontAwesomeIcon icon={ faTrash } /> remove
             </Button>
           </td>
         </tr>)

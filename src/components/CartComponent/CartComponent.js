@@ -243,7 +243,6 @@ class CartComponent extends Component {
 
               <br/><br/>
 
-              Your order will be automatically paid via Stripe.
               You need to have your Credit card connected <a href={"/profile/edit/"}>in your profile section</a>.
             </div>
             <div className="text-right">

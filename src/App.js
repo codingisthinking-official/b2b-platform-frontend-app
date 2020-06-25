@@ -34,6 +34,8 @@ import RegisterContainer
 import ProfileOrdersContainer from "./containers/ProfileOrdersContainer/ProfileOrdersContainer";
 import ProfileEditContainer
   from "./containers/ProfileEditContainer/ProfileEditContainer";
+import EditProductContainer
+  from "./containers/EditProductContainer/EditProductContainer";
 
 class App extends React.Component {
   render() {
@@ -74,6 +76,10 @@ class App extends React.Component {
 
       loggedRouter = (<Router>
         <Switch>
+          <Route path="/manage/products/:id/edit/">
+            <NavMenuComponent/>
+            <EditProductContainer />
+          </Route>
           <Route path="/manage/products/">
             <NavMenuComponent/>
             <ManageProductsContainer />
