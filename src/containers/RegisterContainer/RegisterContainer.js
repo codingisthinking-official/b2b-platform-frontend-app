@@ -142,31 +142,31 @@ class RegisterContainer extends Component {
           <Form.Control isInvalid={this.hasError(this.state.errors, 'password')} type="password" placeholder="Password" autoComplete={"off"} onChange={ (e) => this.setState({ password: e.target.value }) }/>
           {this.displayErrors(this.state.errors, 'password')}
         </Form.Group>
-        <Form.Group controlId="type">
-          <Form.Label>Who would you like to be on the platform</Form.Label>
-          <div>
-            <Form.Check
-              type={"radio"}
-              label={`I want to buy stock in the marketplace`}
-              checked={this.state.type === 0}
-              onClick={() => {
-                this.setState({
-                  type: 0
-                });
-              }}
-            />
-            <Form.Check
-              type={"radio"}
-              label={`I want to sell products in the marketplace`}
-              checked={this.state.type === 1}
-              onClick={() => {
-                this.setState({
-                  type: 1
-                });
-              }}
-            />
-          </div>
-        </Form.Group>
+        {/*<Form.Group controlId="type">*/}
+        {/*  <Form.Label>Who would you like to be on the platform</Form.Label>*/}
+        {/*  <div>*/}
+        {/*    <Form.Check*/}
+        {/*      type={"radio"}*/}
+        {/*      label={`I want to buy stock in the marketplace`}*/}
+        {/*      checked={this.state.type === 0}*/}
+        {/*      onClick={() => {*/}
+        {/*        this.setState({*/}
+        {/*          type: 0*/}
+        {/*        });*/}
+        {/*      }}*/}
+        {/*    />*/}
+        {/*    <Form.Check*/}
+        {/*      type={"radio"}*/}
+        {/*      label={`I want to sell products in the marketplace`}*/}
+        {/*      checked={this.state.type === 1}*/}
+        {/*      onClick={() => {*/}
+        {/*        this.setState({*/}
+        {/*          type: 1*/}
+        {/*        });*/}
+        {/*      }}*/}
+        {/*    />*/}
+        {/*  </div>*/}
+        {/*</Form.Group>*/}
         <Button variant="primary" type="submit">
           <FontAwesomeIcon icon={ faUser } /> Register a new account
         </Button>

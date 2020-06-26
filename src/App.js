@@ -36,6 +36,14 @@ import ProfileEditContainer
   from "./containers/ProfileEditContainer/ProfileEditContainer";
 import EditProductContainer
   from "./containers/EditProductContainer/EditProductContainer";
+import NewProductContainer
+  from "./containers/NewProductContainer/NewProductContainer";
+import ManageCategoriesContainer
+  from "./containers/ManageCategoriesContainer/ManageCategoriesContainer";
+import NewCategoryContainer
+  from "./containers/NewCategoryContainer/NewCategoryContainer";
+import EditCategoryContainer
+  from "./containers/EditCategoryContainer/EditCategoryContainer";
 
 class App extends React.Component {
   render() {
@@ -76,9 +84,25 @@ class App extends React.Component {
 
       loggedRouter = (<Router>
         <Switch>
-          <Route path="/manage/products/:id/edit/">
+          <Route path="/manage/products/:productId/edit/">
             <NavMenuComponent/>
             <EditProductContainer />
+          </Route>
+          <Route path="/manage/products/new/">
+            <NavMenuComponent/>
+            <NewProductContainer />
+          </Route>
+          <Route path="/manage/categories/:categoryId/edit/">
+            <NavMenuComponent/>
+            <EditCategoryContainer />
+          </Route>
+          <Route path="/manage/categories/new/">
+            <NavMenuComponent/>
+            <NewCategoryContainer />
+          </Route>
+          <Route path="/manage/categories/">
+            <NavMenuComponent/>
+            <ManageCategoriesContainer />
           </Route>
           <Route path="/manage/products/">
             <NavMenuComponent/>

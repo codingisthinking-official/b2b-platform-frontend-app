@@ -212,9 +212,9 @@ class ProfileEditContainer extends Component {
     }
 
     if (this.state.cards.length > 0) {
-      creditCardData = (<div class={"card--container"}>
-        {this.state.cards.map((c) => {
-          return (<div>
+      creditCardData = (<div className={"card--container"}>
+        {this.state.cards.map((c, i) => {
+          return (<div key={i}>
             <strong>Type</strong>: {c.brand}<br/>
             <strong>Ending:</strong> ****{c.last4}
           </div>);

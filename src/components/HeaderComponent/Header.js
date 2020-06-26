@@ -36,15 +36,20 @@ class Header extends Component {
       const user = AuthenticationService.getUser();
 
       if (user) {
+        let shoppingCart = null;
+
+        if (!AuthenticationService.isSupplier()) {
+          shoppingCart = (<Button href={"/cart/"} variant={"outline-info"} size={"md"}>
+            <FontAwesomeIcon icon={ faShoppingCart } />
+          </Button>);
+        }
         auth = (<div className={"container-header-top"}>
           <div className={"container"}>
             <p className="user">
               <span className="current--user">
                 Welcome, <strong>{user.name}</strong>
               </span>
-              <Button href={"/cart/"} variant={"outline-info"} size={"md"}>
-                <FontAwesomeIcon icon={ faShoppingCart } />
-              </Button>
+              {shoppingCart}
               <Button className={"btn-logout"}
                       onClick={this.logoutAction.bind(this)} variant={"outline-danger"}
                       size={"md"}>

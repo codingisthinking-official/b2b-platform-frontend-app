@@ -4,11 +4,10 @@ import { withRouter } from "react-router-dom";
 import { Button, Form, Alert } from "react-bootstrap";
 import config from "../../config";
 
-import "./EditProductContainer.css";
 import SidebarContainer from "../SidebarContainer/SidebarContainer";
 import AuthenticationService from "../../services/AuthenticationService";
 
-class EditProductContainer extends Component {
+class NewProductContainer extends Component {
   constructor() {
     super();
     this.state = {
@@ -30,22 +29,6 @@ class EditProductContainer extends Component {
   }
 
   componentDidMount() {
-    fetch(config.api_url + '/api/product/' + this.props.match.params.productId, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
-      }
-    })
-    .then(r => {
-      r.json().then(r => {
-        this.setState({
-          'product': r,
-        })
-      });
-    });
-
     fetch(config.api_url + '/api/category/tree/', {
       method: 'GET',
       headers: {
@@ -54,11 +37,11 @@ class EditProductContainer extends Component {
         'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
       }
     })
-    .then(r => {
-      r.json().then(r => {
-        this.setState({'categories': r});
+      .then(r => {
+        r.json().then(r => {
+          this.setState({'categories': r});
+        });
       });
-    });
   }
 
   hasError(errors, key) {
@@ -102,8 +85,8 @@ class EditProductContainer extends Component {
   updateProduct(id) {
     const product = this.state.product;
 
-    fetch(config.api_url + '/api/product/' + this.props.match.params.productId + '/', {
-      method: 'PUT',
+    fetch(config.api_url + '/api/products/new/', {
+      method: 'POST',
       body: JSON.stringify(product),
       headers: {
         'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
@@ -126,21 +109,28 @@ class EditProductContainer extends Component {
   }
 
   render() {
-    let updated = null;
-
     if (this.state.updated) {
-      updated = (<Alert variant={"success"}>The product has been updated.</Alert> );
+      return (<div className={"container--with-sidebar"}>
+        <SidebarContainer />
+        <div className={"box-white"}>
+          <h1>Add new product</h1>
+          <Button variant="light" href={"/manage/products/"}>
+            Back to the product list
+          </Button>
+          <br/><br/>
+          <Alert variant={"success"}>The product has been added.</Alert>
+        </div>
+      </div>);
     }
 
     return (<div className={"container--with-sidebar"}>
       <SidebarContainer />
       <div className={"box-white"}>
-        <h1>Edit product</h1>
+        <h1>Add new product</h1>
         <Button variant="light" href={"/manage/products/"}>
           Back to the product list
         </Button>
         <br/><br/>
-        {updated}
         <Form>
           <Form.Group controlId="name">
             <Form.Label>Product name</Form.Label>
@@ -194,19 +184,6 @@ class EditProductContainer extends Component {
               {this.displayErrors(this.state.errors, 'location')}
             </Form.Text>
           </Form.Group>
-          <Form.Group controlId="thumbnail">
-            <Form.Label>Photo</Form.Label>
-            <Form.Control isInvalid={this.hasError(this.state.errors, 'thumbnail')} type="file" value={this.state.product.thumbnail} onChange={(e) => {
-              let product = this.state.product;
-              product.thumbnail = e.target.value;
-              this.setState({
-                product: product
-              });
-            }}/>
-            <Form.Text className="text-muted">
-              {this.displayErrors(this.state.errors, 'thumbnail')}
-            </Form.Text>
-          </Form.Group>
           <Form.Group controlId="category">
             <Form.Label>Product category</Form.Label>
             <Form.Control as="select" value={this.state.product.category.id} onChange={(e) => {
@@ -226,7 +203,7 @@ class EditProductContainer extends Component {
             e.preventDefault();
             e.stopPropagation();
           }}>
-            Edit product
+            Add a new product
           </Button>
         </Form>
       </div>
@@ -234,4 +211,4 @@ class EditProductContainer extends Component {
   }
 }
 
-export default withRouter(EditProductContainer);
+export default withRouter(NewProductContainer);

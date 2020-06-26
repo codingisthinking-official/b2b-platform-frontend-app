@@ -139,7 +139,7 @@ class ManageProductsContainer extends Component {
       <div className={"container--with-sidebar"}>
         <SidebarContainer />
         <div className={"box-white"}>
-          <h1>My Products</h1>
+          <h1>Manage products</h1>
           {fileUploadedAlert}
           <h2>Add new product</h2>
           <strong>Download the example Excel file</strong>,
@@ -156,6 +156,10 @@ class ManageProductsContainer extends Component {
             });
           }} variant={"info"}>Import products</Button>
           <h2>Your stock</h2>
+          <Button variant={"primary"} href="/manage/products/new/">
+            Add new product
+          </Button>
+          <br/><br/>
           {products}
           <Modal show={this.state.showModal} onHide={handleClose} animation={true}>
             <Modal.Header closeButton>

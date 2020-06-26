@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import config from "../../config";
 import AuthenticationService from "../../services/AuthenticationService";
 import { withRouter } from "react-router-dom";
-import { Alert, Table, Button } from "react-bootstrap";
+import { Alert, Table, Button, Form } from "react-bootstrap";
 import SidebarContainer from "../SidebarContainer/SidebarContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +14,7 @@ class ProfileOrdersContainer extends Component {
     super();
     this.state = {
       'orders': [],
+      'products': [],
     };
   }
 
@@ -34,7 +35,8 @@ class ProfileOrdersContainer extends Component {
         .then(r => {
           r.json().then(r => {
             this.setState({
-              'orders': r,
+              'orders': r.orders,
+              'products': r.products,
             })
           });
         });
@@ -54,6 +56,21 @@ class ProfileOrdersContainer extends Component {
       if (res.ok) {
         this.fetchOrders();
       }
+    });
+  }
+
+  updateOrderStatus(orderId, orderStatusId)
+  {
+    fetch(config.api_url + '/api/orders/' + orderId + '/', {
+      method: 'PUT',
+      body: JSON.stringify({
+        status: orderStatusId
+      }),
+      headers: {
+        'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
+      }
+    }).then((r) => {
+      this.fetchOrders();
     });
   }
 
@@ -84,12 +101,17 @@ class ProfileOrdersContainer extends Component {
           </div>
         );
 
-        let paymentStatus = (<FontAwesomeIcon icon={ faCheck } className="paid"/>);
+        let changeStatusForm = null;
+        let paymentStatus = (
+          <div class="paid">
+            <FontAwesomeIcon icon={ faCheck } className="paid"/> paid
+          </div>
+        );
 
         if (o.paid === false) {
-          paymentStatus = (
-            <div>
-              <FontAwesomeIcon icon={ faTimes } className="unpaid" />
+          let payButton = null;
+          if (!AuthenticationService.isSupplier()) {
+            payButton = (<div>
               <br/>
               <Button size={"sm"} variant={"outline-primary"} onClick={(e) => {
                 this.payOrder(o);
@@ -97,11 +119,56 @@ class ProfileOrdersContainer extends Component {
                 e.preventDefault();
                 e.stopPropagation();
               }}>Pay for the order</Button>
+            </div>);
+          }
+
+          paymentStatus = (
+            <div class="unpaid">
+              <FontAwesomeIcon icon={ faTimes } className="unpaid" /> not paid
+              {payButton}
             </div>
           );
         }
+
+        if (AuthenticationService.isSupplier()) {
+          changeStatusForm = (<div className={"order--status"}>
+          <strong>Order Status:</strong>
+          <br/><br/>
+          <Form.Group>
+            <Form.Control as="select" value={o.status} onChange={(e) => {
+              this.updateOrderStatus(o.id, e.target.value);
+            }}>
+                <option value="0">new</option>
+                <option value="1">in progress</option>
+                <option value="2">sent</option>
+                <option value="3">returned</option>
+            </Form.Control>
+          </Form.Group>
+          </div>);
+        } else {
+          let orderStatusText = 'New order';
+
+          if (o.status === 1) {
+            orderStatusText = 'In progress';
+          }
+
+          if (o.status === 2) {
+            orderStatusText = 'Sent';
+          }
+
+          if (o.status === 3) {
+            orderStatusText = 'Returned';
+          }
+
+          changeStatusForm = (<div className={"order--status"}>
+            <strong>Order Status:</strong> {orderStatusText}
+          </div>);
+        }
+
         return (<tr key={i}>
-          <td>{o.id}</td>
+          <td>
+            {o.id}
+          </td>
           <td>
             <strong>Products:</strong><br/>
             {products}<br/>
@@ -109,6 +176,7 @@ class ProfileOrdersContainer extends Component {
             {deliveryAddress}<br/>
           </td>
           <td className={"payment-status"}>
+            {changeStatusForm}
             {paymentStatus}
           </td>
         </tr>);
@@ -119,7 +187,7 @@ class ProfileOrdersContainer extends Component {
           <tr>
             <th>Order no</th>
             <th>Your order</th>
-            <th>Payment status</th>
+            <th>Payment and order</th>
           </tr>
         </thead>
         <tbody>
@@ -131,7 +199,7 @@ class ProfileOrdersContainer extends Component {
     return (<div className={"container--with-sidebar"}>
       <SidebarContainer />
       <div className={"box-white"}>
-        <h1>My orders</h1>
+        <h1>Orders</h1>
         {alert}
         {ordersTable}
       </div>
