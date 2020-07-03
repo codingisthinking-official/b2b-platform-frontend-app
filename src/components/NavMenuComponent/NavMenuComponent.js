@@ -35,7 +35,7 @@ class NavMenuComponent extends Component {
             e.preventDefault();
             e.stopPropagation();
           }}>
-            <FormControl type="text" placeholder="Search product" className="input-search" onChange={e => {
+            <FormControl type="text" placeholder="" className="input-search" onChange={e => {
               this.setState({"q": e.target.value});
             }}/>
             <Button variant="primary" onClick={this.search.bind(this)}>

@@ -20,9 +20,8 @@ class EditProductContainer extends Component {
         ean: '',
         price: '',
         location: '',
-        category: {
-          id: ''
-        },
+        thumbnail: '',
+        category: '',
         delivery_dates: []
       },
       errors: []
@@ -30,22 +29,6 @@ class EditProductContainer extends Component {
   }
 
   componentDidMount() {
-    fetch(config.api_url + '/api/product/' + this.props.match.params.productId, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
-      }
-    })
-    .then(r => {
-      r.json().then(r => {
-        this.setState({
-          'product': r,
-        })
-      });
-    });
-
     fetch(config.api_url + '/api/category/tree/', {
       method: 'GET',
       headers: {
@@ -55,8 +38,30 @@ class EditProductContainer extends Component {
       }
     })
     .then(r => {
-      r.json().then(r => {
-        this.setState({'categories': r});
+      r.json().then(cats => {
+        this.setState({'categories': cats});
+
+        fetch(config.api_url + '/api/product/' + this.props.match.params.productId, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
+          }
+        })
+          .then(r => {
+            r.json().then(r => {
+              let json = r;
+              if (!json.category) {
+                json.category = cats[0].id;
+              }
+
+              this.setState({
+                product: json,
+              })
+            });
+          });
+
       });
     });
   }
@@ -196,7 +201,7 @@ class EditProductContainer extends Component {
           </Form.Group>
           <Form.Group controlId="thumbnail">
             <Form.Label>Photo</Form.Label>
-            <Form.Control isInvalid={this.hasError(this.state.errors, 'thumbnail')} type="file" value={this.state.product.thumbnail} onChange={(e) => {
+            <Form.Control isInvalid={this.hasError(this.state.errors, 'thumbnail')} type="text" value={this.state.product.thumbnail} onChange={(e) => {
               let product = this.state.product;
               product.thumbnail = e.target.value;
               this.setState({
@@ -209,7 +214,7 @@ class EditProductContainer extends Component {
           </Form.Group>
           <Form.Group controlId="category">
             <Form.Label>Product category</Form.Label>
-            <Form.Control as="select" value={this.state.product.category.id} onChange={(e) => {
+            <Form.Control as="select" value={this.state.product.category} onChange={(e) => {
               let product = this.state.product;
               product.category = parseInt(e.target.value);
               this.setState({

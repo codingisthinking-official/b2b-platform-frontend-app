@@ -5,6 +5,7 @@ import './CategorySidebarComponent.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChevronDown, faHamburger} from "@fortawesome/free-solid-svg-icons";
 import {Button} from "react-bootstrap";
+import LoadingComponent from "../LoadingComponent/LoadingComponent";
 
 class CategorySidebarComponent extends Component {
   constructor() {
@@ -57,6 +58,7 @@ class CategorySidebarComponent extends Component {
 
     return (
       <aside className={"category--sidebar"}>
+        <LoadingComponent visible={this.props.loading} />
         <div className="sidebar-mobile-icon">
           <Button variant={"secondary"} onClick={(e) => {
             this.props.parent.setState({

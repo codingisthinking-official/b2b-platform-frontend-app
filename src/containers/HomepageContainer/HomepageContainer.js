@@ -5,12 +5,15 @@ import AuthenticationService from "../../services/AuthenticationService";
 import ProductListComponent
   from "../../components/ProductListComponent/ProductListComponent";
 import SidebarContainer from "../SidebarContainer/SidebarContainer";
+import LoadingComponent
+  from "../../components/LoadingComponent/LoadingComponent";
 
 class HomepageContainer extends Component {
   constructor() {
     super();
     this.state = {
-      'products': []
+      products: [],
+      loading: true
     };
 
     if (AuthenticationService.isSupplier()) {
@@ -19,19 +22,19 @@ class HomepageContainer extends Component {
   }
 
   componentDidMount() {
-    const obj = {
+    fetch(config.api_url + '/api/products/', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
       }
-    };
-    fetch(config.api_url + '/api/products/', obj)
+    })
       .then(r => {
         r.json().then(r => {
           this.setState({
-            'products': r,
+            products: r,
+            loading: false
           })
         });
       });
@@ -45,6 +48,7 @@ class HomepageContainer extends Component {
     return (
       <div className={"container--with-sidebar"}>
         <SidebarContainer />
+        <LoadingComponent visible={this.state.loading} />
         <ProductListComponent heading={"Recently added products"} products={this.state.products} />
       </div>
     );

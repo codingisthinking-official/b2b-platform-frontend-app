@@ -8,15 +8,18 @@ import "./ProductContainer.css";
 import noPhotoImage from "../../components/ProductListComponent/no-photo.svg";
 import SidebarContainer from "../SidebarContainer/SidebarContainer";
 import CartService from "../../services/CartService";
+import LoadingComponent
+  from "../../components/LoadingComponent/LoadingComponent";
 
 class ProductContainer extends Component {
   constructor() {
     super();
     this.state = {
-      'product': {},
-      'showModal': false,
-      'added': false,
-      'quantity': 1
+      loading: true,
+      product: {},
+      showModal: false,
+      added: false,
+      quantity: 1
     };
   }
 
@@ -33,7 +36,8 @@ class ProductContainer extends Component {
       .then(r => {
         r.json().then(r => {
           this.setState({
-            'product': r,
+            product: r,
+            loading: false
           })
         });
       });
@@ -54,8 +58,12 @@ class ProductContainer extends Component {
       <div className="container-cart">
         <div className="quantity">
           <input type={"text"} value={this.state.quantity} onChange={(e) => {
+            let value = 1;
+            if (e.target.value.length > 0) {
+              value = parseInt(e.target.value);
+            }
             this.setState({
-              'quantity': parseInt(e.target.value)
+              quantity: value
             });
           }}/>
         </div>
@@ -83,6 +91,7 @@ class ProductContainer extends Component {
     return (
       <div className={"container--with-sidebar"}>
         <SidebarContainer />
+        <LoadingComponent visible={this.state.loading} />
         <div className={"box-white"}>
           <h1>{this.state.product.name}</h1>
           <div className="product-box">
@@ -90,15 +99,18 @@ class ProductContainer extends Component {
               <img src={ photo } alt={this.state.product.name}/>
             </div>
             <div className="description">
-              <p><strong>Product:</strong> {this.state.product.name}</p>
-              <p><strong>EAN:</strong> {this.state.product.ean}</p>
-              <p><strong>Location:</strong> {this.state.product.location}</p>
-              <br/>
+              <strong>Product:</strong> {this.state.product.name}<br/>
+              <strong>EAN:</strong> {this.state.product.ean}<br/>
+              <strong>Location:</strong> {this.state.product.location}<br/>
+              <strong>In stock:</strong> {this.state.product.available}<br/>
               <div className="order">
                 Price: €{this.state.product.price}
                 {buttonAddToCart}
               </div>
             </div>
+          </div>
+          <div className="product-box-tab">
+            {this.state.product.description}
           </div>
         </div>
       </div>

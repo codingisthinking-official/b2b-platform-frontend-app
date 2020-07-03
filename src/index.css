@@ -23,3 +23,8 @@ h1 {
 .text-center {
   text-align: center;
 }
+
+.container--with-sidebar {
+  position: relative;
+  min-height: 300px;
+}

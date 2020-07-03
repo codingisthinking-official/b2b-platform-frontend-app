@@ -2,12 +2,14 @@ import React, { Component } from "react";
 
 import { Alert, Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faLock, faSpinner} from '@fortawesome/free-solid-svg-icons'
+import { faLock } from '@fortawesome/free-solid-svg-icons'
 import AuthenticationService from "../../services/AuthenticationService";
 
 import config from "../../config";
 
 import './Login.css';
+import LoadingComponent
+  from "../../components/LoadingComponent/LoadingComponent";
 
 class Login extends Component {
   constructor() {
@@ -66,21 +68,14 @@ class Login extends Component {
 
   render() {
     let error = null;
-    let loading = null;
 
     if (this.state.error) {
       error = (<Alert variant={"danger"}>Invalid e-mail address or password.</Alert>);
     }
 
-    if (this.state.loading) {
-      loading = (<div className="loader">
-        <FontAwesomeIcon icon={faSpinner} spin={true} />
-      </div>);
-    }
-
     return (<div className={"container container__signin"}>
       <h1 className={"display_1"}>Sign in</h1>
-      {loading}
+      <LoadingComponent visible={this.state.loading} />
       {error}
       <Form className={"container__signin_form"} autoComplete={"off"} onSubmit={this.sendLoginRequest.bind(this)}>
         <Form.Group controlId="email">

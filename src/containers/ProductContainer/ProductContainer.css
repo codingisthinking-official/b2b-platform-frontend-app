@@ -67,6 +67,7 @@
   display: inline-block;
   vertical-align: top;
   font-size: 14px;
+  line-height: 24px;
 }
 
 .product-box .description strong {
@@ -91,8 +92,10 @@
 }
 
 .product-box .order {
-  font-size: 18px;
-  margin-top: 10px;
+  font-size: 16px;
+  margin-top: 30px;
+  background: #eee;
+  padding: 10px;
 }
 
 .product-box .order small {
@@ -154,4 +157,11 @@
   background: #54801a;
   padding: 10px 0;
   color: #fff;
+}
+
+.product-box-tab {
+  border: 1px solid #eee;
+  margin: 10px;
+  padding: 10px;
+  line-height: 22px;
 }

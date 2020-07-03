@@ -223,6 +223,105 @@ class ProfileEditContainer extends Component {
     }
 
     const handleClose = () => this.setShow(false);
+    let creditCardUpdateContainer = null;
+
+    if (!AuthenticationService.isSupplier()) {
+      creditCardUpdateContainer = <Col lg={6}>
+        <h3>3. Your credit card</h3>
+        <br/>
+        Please, connect your credit card with our platform so we can
+        charge your credit card against your orders.
+        <br/><br/>
+
+        {creditCardData}
+
+        <Button onClick={(e) => {
+          this.setShow(true);
+          e.preventDefault();
+          e.stopPropagation();
+        }} variant={"primary"}>Update credit card</Button>
+        <br/><br/>
+        Payment provider:
+        <img src={stripeLogo} alt={"Stripe payments"} className={"stripe-payment-logo"} style={{
+          "height": "30px",
+          "marginLeft": "20px",
+          "position": "relative",
+          "top": "-2px"
+        }}/>
+        <Modal show={this.state.showModal} onHide={handleClose} animation={true}>
+          <Modal.Header closeButton>
+            <Modal.Title>Update your credit card details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Your credit card details are stored in Stripe. <br/>
+            <strong>We don't</strong> store your card number, cvc and expire date!
+            <br/><br/>
+            {creditCardError}
+            <Form>
+              <Form.Group controlId="number">
+                <Form.Label>Card number</Form.Label>
+                <Form.Control type="text" value={this.state.card.number} onChange={(e) => {
+                  let card = this.state.card;
+                  card.number = e.target.value;
+                  this.setState({
+                    'card': card
+                  });
+                }}/>
+              </Form.Group>
+              <Form.Group controlId="cvc">
+                <Form.Label>CVC</Form.Label>
+                <Form.Control type="text" value={this.state.card.cvc} onChange={(e) => {
+                  let card = this.state.card;
+                  card.cvc = e.target.value;
+                  this.setState({
+                    'card': card
+                  });
+                }}/>
+              </Form.Group>
+              <Form.Group controlId="expMonth">
+                <Form.Label>Expire month</Form.Label>
+                <Form.Control type="text" value={this.state.card.exp_month} onChange={(e) => {
+                  let card = this.state.card;
+                  card.exp_month = e.target.value;
+                  this.setState({
+                    'card': card
+                  });
+                }}/>
+              </Form.Group>
+              <Form.Group controlId="cvc">
+                <Form.Label>Expire year</Form.Label>
+                <Form.Control type="text" value={this.state.card.exp_year} onChange={(e) => {
+                  let card = this.state.card;
+                  card.exp_year = e.target.value;
+                  this.setState({
+                    'card': card
+                  });
+                }}/>
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer className={"modal__footer-line-light"}>
+            <Button variant="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={(e) => {
+              this.updateCreditCardDetails(this.state.card);
+              e.preventDefault();
+              e.stopPropagation();
+            }} disabled={this.state.selectedFile === ''}>
+              Update credit card
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </Col>;
+    } else {
+      creditCardUpdateContainer = <Col lg={6}>
+        <h3>3. Your credit card</h3>
+        <br/>
+        No credit card is required to use the application.
+      </Col>
+    }
+
     return (<div className={"container--with-sidebar"}>
       <SidebarContainer />
       <div className={"box-white"}>
@@ -324,94 +423,7 @@ class ProfileEditContainer extends Component {
               </div>
             </Form>
           </Col>
-          <Col lg={6}>
-            <h3>3. Your credit card</h3>
-            <br/>
-            Please, connect your credit card with our platform so we can
-            charge your credit card against your orders.
-            <br/><br/>
-
-            {creditCardData}
-
-            <Button onClick={(e) => {
-              this.setShow(true);
-              e.preventDefault();
-              e.stopPropagation();
-            }} variant={"primary"}>Update credit card</Button>
-            <br/><br/>
-            Payment provider:
-            <img src={stripeLogo} alt={"Stripe payments"} className={"stripe-payment-logo"} style={{
-              "height": "30px",
-              "marginLeft": "20px",
-              "position": "relative",
-              "top": "-2px"
-            }}/>
-            <Modal show={this.state.showModal} onHide={handleClose} animation={true}>
-              <Modal.Header closeButton>
-                <Modal.Title>Update your credit card details</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                Your credit card details are stored in Stripe. <br/>
-                <strong>We don't</strong> store your card number, cvc and expire date!
-                <br/><br/>
-                {creditCardError}
-                <Form>
-                  <Form.Group controlId="number">
-                    <Form.Label>Card number</Form.Label>
-                    <Form.Control type="text" value={this.state.card.number} onChange={(e) => {
-                      let card = this.state.card;
-                      card.number = e.target.value;
-                      this.setState({
-                        'card': card
-                      });
-                    }}/>
-                  </Form.Group>
-                  <Form.Group controlId="cvc">
-                    <Form.Label>CVC</Form.Label>
-                    <Form.Control type="text" value={this.state.card.cvc} onChange={(e) => {
-                      let card = this.state.card;
-                      card.cvc = e.target.value;
-                      this.setState({
-                        'card': card
-                      });
-                    }}/>
-                  </Form.Group>
-                  <Form.Group controlId="expMonth">
-                    <Form.Label>Expire month</Form.Label>
-                    <Form.Control type="text" value={this.state.card.exp_month} onChange={(e) => {
-                      let card = this.state.card;
-                      card.exp_month = e.target.value;
-                      this.setState({
-                        'card': card
-                      });
-                    }}/>
-                  </Form.Group>
-                  <Form.Group controlId="cvc">
-                    <Form.Label>Expire year</Form.Label>
-                    <Form.Control type="text" value={this.state.card.exp_year} onChange={(e) => {
-                      let card = this.state.card;
-                      card.exp_year = e.target.value;
-                      this.setState({
-                        'card': card
-                      });
-                    }}/>
-                  </Form.Group>
-                </Form>
-              </Modal.Body>
-              <Modal.Footer className={"modal__footer-line-light"}>
-                <Button variant="secondary" onClick={handleClose}>
-                  Cancel
-                </Button>
-                <Button variant="primary" onClick={(e) => {
-                  this.updateCreditCardDetails(this.state.card);
-                  e.preventDefault();
-                  e.stopPropagation();
-                }} disabled={this.state.selectedFile === ''}>
-                  Update credit card
-                </Button>
-              </Modal.Footer>
-            </Modal>
-          </Col>
+          {creditCardUpdateContainer}
         </Row>
       </div>
     </div>);

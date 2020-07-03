@@ -4,6 +4,7 @@
   display: inline-block;
   vertical-align: top;
   background: #fff;
+  margin-bottom: 30px;
 }
 
 .sidebar-mobile-icon {
@@ -38,8 +39,14 @@
 
 .category--sidebar ul li a {
   color: #000;
-  padding: 8px 5px;
+  padding: 8px;
   display: block;
+  border-bottom: 1px dashed #ccc;
+}
+
+
+.category--sidebar ul li a:hover {
+  background: #eee;
 }
 
 .category--sidebar ul li a.current {

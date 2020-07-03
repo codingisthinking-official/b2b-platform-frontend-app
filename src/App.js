@@ -64,15 +64,14 @@ class App extends React.Component {
         </Switch>
       </Router>);
     } else {
-      const obj = {
+      fetch(config.api_url + '/api/account/current/', {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
         }
-      };
-      fetch(config.api_url + '/api/account/current/', obj)
+      })
         .then(resp => {
           resp.json().then(r => {
             if (!resp.ok) {
@@ -82,6 +81,7 @@ class App extends React.Component {
           });
         });
 
+      
       loggedRouter = (<Router>
         <Switch>
           <Route path="/manage/products/:productId/edit/">

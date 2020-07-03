@@ -6,6 +6,10 @@ class CartService {
       cart = [];
     }
 
+    if (product.available < quantity) {
+      quantity = product.available;
+    }
+
     cart.push({
       'id': product.id,
       'quantity': quantity,

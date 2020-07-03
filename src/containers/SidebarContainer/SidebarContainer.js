@@ -48,15 +48,15 @@ class SidebarContainer extends Component {
         ]
       });
     } else {
-      items.push({
-        "title": "Stock on Fire",
-        "children": [
-          {
-            "title": "See products",
-            "url": "/"
-          }
-        ]
-      });
+      // items.push({
+      //   "title": "Categories",
+      //   "children": [
+      //     {
+      //       "title": "See products",
+      //       "url": "/"
+      //     }
+      //   ]
+      // });
       items.push({
         "title": "Account Management",
         "children": [
@@ -78,42 +78,46 @@ class SidebarContainer extends Component {
 
     this.state = {
       items: items,
-      displayMenu: false
+      displayMenu: false,
+      loading: false
     };
   }
 
   componentDidMount() {
-    if (!AuthenticationService.isSupplier()) {
-      fetch(config.api_url + '/api/category/tree/', {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
-        }
-      })
-        .then(r => {
-          r.json().then(r => {
-            let items = this.state.items;
-            let children = [];
-            r.forEach((i) => {
-              children.push({
-                title: i.name,
-                slug: i.slug,
-                url: "/category/" + i.slug + "/"
-              });
-            });
-
-            items[0].children = children;
-
-            this.setState({'items': items});
-          });
-        });
-    }
+    // if (!AuthenticationService.isSupplier()) {
+    //   fetch(config.api_url + '/api/category/tree/', {
+    //     method: 'GET',
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json',
+    //       'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
+    //     }
+    //   })
+    //     .then(r => {
+    //       r.json().then(r => {
+    //         let items = this.state.items;
+    //         let children = [];
+    //         r.forEach((i) => {
+    //           children.push({
+    //             title: i.name,
+    //             slug: i.slug,
+    //             url: "/category/" + i.slug + "/"
+    //           });
+    //         });
+    //
+    //         items[0].children = children;
+    //
+    //         this.setState({
+    //           items: items,
+    //           loading: false
+    //         });
+    //       });
+    //     });
+    // }
   }
 
   render() {
-    return (<CategorySidebarComponent parent={this} items={this.state.items} current={this.props.current} />);
+    return (<CategorySidebarComponent loading={this.state.loading} parent={this} items={this.state.items} current={this.props.current} />);
   }
 }
 

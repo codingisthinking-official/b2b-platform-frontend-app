@@ -24,9 +24,13 @@ class ProductComponent extends Component {
     let buttonAddToCart = (
       <div className="container-cart">
         <div className="quantity">
-          <input type={"text"} value={this.state.quantity} readOnly={true} onChange={(e) => {
+          <input type={"text"} value={this.state.quantity} readOnly={false} onChange={(e) => {
+            let value = 1;
+            if (e.target.value.length > 0) {
+              value = parseInt(e.target.value);
+            }
             this.setState({
-              'quantity': parseInt(e.target.value)
+              quantity: value
             });
           }}/>
         </div>
@@ -51,14 +55,20 @@ class ProductComponent extends Component {
       );
     }
 
+    let productName = this.props.product.name;
+
+    if (productName.length > 35) {
+      productName = productName.substr(0, 35) + '...';
+    }
+
     return (<div className={"product"}>
       <h4>
-        <a href={"/product/" + this.props.product.id + "/"}>
-          {this.props.product.name}
+        <a href={"/product/" + this.props.product.id + "/"} title={this.props.product.name}>
+          {productName}
         </a>
       </h4>
       <p>EAN: {this.props.product.ean}</p>
-      <p class={"location"}><strong>Location</strong>: {this.props.product.location}</p>
+      <p className={"location"}><strong>Location</strong>: {this.props.product.location}</p>
       <img src={ photo } alt={this.props.product.name}/>
       <div className="price">
         <div className="your-price">

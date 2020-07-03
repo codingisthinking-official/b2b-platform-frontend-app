@@ -22,7 +22,7 @@ header {
 }
 
 header img {
-  height: 70px;
+  height: 50px;
   max-width: 100%;
 }
 
@@ -69,4 +69,21 @@ header img {
 
 .container-header .btn--add-home-button svg {
   margin-right: 10px;
+}
+
+.cart--basket-btn {
+  position: relative;
+  z-index: 8;
+}
+
+.cart--basket-btn .number {
+  position: absolute;
+  bottom: -5px;
+  left: -15px;
+  color: #fff;
+  z-index: 4;
+  border-radius: 100%;
+  padding: 3px 10px;
+  font-size: 12px;
+  background: #cc0000;
 }

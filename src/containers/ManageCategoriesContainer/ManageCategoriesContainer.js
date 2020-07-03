@@ -64,18 +64,17 @@ class ManageCategoriesContainer extends Component {
         return (<tr key={i}>
           <td>{c.id}</td>
           <td>
-            {c.name}
+            <Button href={url} className={"button-edit"} variant={"primary"} size={"sm"}>
+              <FontAwesomeIcon icon={ faIndent } />
+            </Button> {c.name}
           </td>
           <td>
-            <Button href={url} className={"button-edit"} variant={"primary"} size={"sm"}>
-              <FontAwesomeIcon icon={ faIndent } /> edit
-            </Button>
             <Button variant={"danger"} size={"sm"} onClick={(e) => {
               this.removeCategory(c);
               e.preventDefault();
               e.stopPropagation();
             }}>
-              <FontAwesomeIcon icon={ faTrash } /> remove
+              <FontAwesomeIcon icon={ faTrash } />
             </Button>
           </td>
         </tr>)

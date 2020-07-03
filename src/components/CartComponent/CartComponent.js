@@ -26,8 +26,28 @@ class CartComponent extends Component {
         street: "",
         country: "United Kingdom"
       },
-      errors: null
-    }
+      errors: null,
+      cards: [],
+    };
+
+    this.refreshCreditCards()
+  }
+
+  refreshCreditCards() {
+    fetch(config.api_url + '/api/payment/credit_cards/', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
+      }
+    }).then(r => {
+      r.json().then(r => {
+        this.setState({
+          cards: r
+        });
+      });
+    });
   }
 
   sendOrder() {
@@ -113,6 +133,13 @@ class CartComponent extends Component {
     }
 
     let sum = 0;
+    let creditCardAlert = null;
+
+    if (this.state.cards.length === 0) {
+      creditCardAlert = (<Alert variant={"danger"} className={"credit-card-first"}>
+        You need to connect your credit card to the account first.
+      </Alert>);
+    }
 
     return (
       <div className={"container--with-sidebar container--cart"}>
@@ -144,7 +171,7 @@ class CartComponent extends Component {
                   {i.product.name}
                 </td>
                 <td>{i.quantity}</td>
-                <td>€{i.product.price.toFixed(2)}</td>
+                <td>€{(i.quantity * i.product.price).toFixed(2)}</td>
                 <td>
                   <Button variant={"danger"} size={"sm"} onClick={(e) => {
                     this.props.parent.removeElementFromCart(i.product);
@@ -244,10 +271,11 @@ class CartComponent extends Component {
               <br/><br/>
 
               You need to have your Credit card connected <a href={"/profile/edit/"}>in your profile section</a>.
+              {creditCardAlert}
             </div>
             <div className="text-right">
               <br/>
-              <Button disabled={this.props.items.length === 0} variant="info" type="submit" onClick={(e) => {
+              <Button disabled={this.props.items.length === 0 || this.state.cards.length === 0} variant="info" type="submit" onClick={(e) => {
                 this.sendOrder();
                 e.preventDefault();
                 e.stopPropagation();

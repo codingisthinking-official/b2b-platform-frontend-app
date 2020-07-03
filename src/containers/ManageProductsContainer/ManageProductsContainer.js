@@ -91,22 +91,20 @@ class ManageProductsContainer extends Component {
         return (<tr key={i}>
           <td>{p.id}</td>
           <td>
+            <Button href={url} className={"button-edit"} variant={"primary"} size={"sm"}>
+              <FontAwesomeIcon icon={ faIndent } />
+            </Button>
             <strong>{p.name}</strong>
-            <br/>
-            €{p.price.toFixed(2)}
-            <br/>
-            Location: {p.location}
+            <br/><br/>
+            Price: €{p.price.toFixed(2)}
           </td>
           <td>
-            <Button href={url} className={"button-edit"} variant={"primary"} size={"sm"}>
-              <FontAwesomeIcon icon={ faIndent } /> edit
-            </Button>
             <Button variant={"danger"} size={"sm"} onClick={(e) => {
               this.removeProduct(p);
               e.preventDefault();
               e.stopPropagation();
             }}>
-              <FontAwesomeIcon icon={ faTrash } /> remove
+              <FontAwesomeIcon icon={ faTrash } />
             </Button>
           </td>
         </tr>)

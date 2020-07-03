@@ -13,6 +13,7 @@ import {
   faShoppingCart,
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons'
+import CartService from "../../services/CartService";
 
 class Header extends Component {
   logoutAction() {
@@ -37,11 +38,25 @@ class Header extends Component {
 
       if (user) {
         let shoppingCart = null;
-
         if (!AuthenticationService.isSupplier()) {
-          shoppingCart = (<Button href={"/cart/"} variant={"outline-info"} size={"md"}>
-            <FontAwesomeIcon icon={ faShoppingCart } />
-          </Button>);
+          let numberOfItemsComponent = null;
+          const cartItems = CartService.getCart();
+
+          if (cartItems && cartItems.length > 0) {
+            cartItems.map((c) => {
+              numberOfItemsComponent += c.quantity;
+            });
+
+
+            numberOfItemsComponent = (
+              <div className={"number"}>{numberOfItemsComponent}</div>);
+          }
+          shoppingCart = (
+            <Button href={"/cart/"} className={"cart--basket-btn"}
+                    variant={"outline-info"} size={"md"}>
+              <FontAwesomeIcon icon={faShoppingCart}/>
+              {numberOfItemsComponent}
+            </Button>);
         }
         auth = (<div className={"container-header-top"}>
           <div className={"container"}>
@@ -65,9 +80,9 @@ class Header extends Component {
             e.preventDefault();
             e.stopPropagation();
           }}>
-            <FormControl type="text" placeholder="Search product"
-                         className="mr-sm-4" onChange={e => {
-              this.setState({"q": e.target.value});
+            <FormControl type="text" placeholder=""
+              className="mr-sm-4" onChange={e => {
+                this.setState({"q": e.target.value});
             }}/>
             <Button variant="primary" onClick={this.search.bind(this)}>
               <FontAwesomeIcon icon={faSearch}/> search

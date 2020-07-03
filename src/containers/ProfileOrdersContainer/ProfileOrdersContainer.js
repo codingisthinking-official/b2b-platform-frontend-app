@@ -59,8 +59,7 @@ class ProfileOrdersContainer extends Component {
     });
   }
 
-  updateOrderStatus(orderId, orderStatusId)
-  {
+  updateOrderStatus(orderId, orderStatusId) {
     fetch(config.api_url + '/api/orders/' + orderId + '/', {
       method: 'PUT',
       body: JSON.stringify({
@@ -72,6 +71,15 @@ class ProfileOrdersContainer extends Component {
     }).then((r) => {
       this.fetchOrders();
     });
+  }
+
+  findProductNameById(id) {
+    return this.state.products[id].name;
+  }
+
+
+  findProductEanById(id) {
+    return this.state.products[id].ean;
   }
 
   render() {
@@ -86,7 +94,13 @@ class ProfileOrdersContainer extends Component {
         if (o.products) {
           products = o.products.map((p, i) => {
             return (
-              <div key={i}>{p.quantity}x {p.product_id}</div>
+              <div key={i} className={"product-cart-item"}>
+                {p.quantity}x {this.findProductNameById(p.product_id)}
+                <br/>
+                <small>
+                  SKU: {this.findProductEanById(p.product_id)}
+                </small>
+              </div>
             )
           });
         } else {
@@ -100,6 +114,18 @@ class ProfileOrdersContainer extends Component {
             {o.delivery_address.street}
           </div>
         );
+
+        let invoiceAddress = null;
+
+        if (o.invoice_address) {
+          invoiceAddress = (<div>
+            <h3>Invoice address</h3>
+            {o.invoice_address.name}<br/>
+            {o.invoice_address.zip_code} {o.invoice_address.city}<br/>
+            {o.invoice_address.street}<br/>
+            VAT: {o.invoice_address.vat}
+          </div>);
+        }
 
         let changeStatusForm = null;
         let paymentStatus = (
@@ -115,7 +141,6 @@ class ProfileOrdersContainer extends Component {
               <br/>
               <Button size={"sm"} variant={"outline-primary"} onClick={(e) => {
                 this.payOrder(o);
-
                 e.preventDefault();
                 e.stopPropagation();
               }}>Pay for the order</Button>
@@ -138,10 +163,10 @@ class ProfileOrdersContainer extends Component {
             <Form.Control as="select" value={o.status} onChange={(e) => {
               this.updateOrderStatus(o.id, e.target.value);
             }}>
-                <option value="0">new</option>
-                <option value="1">in progress</option>
-                <option value="2">sent</option>
-                <option value="3">returned</option>
+              <option value="0">new</option>
+              <option value="1">in progress</option>
+              <option value="2">sent</option>
+              <option value="3">returned</option>
             </Form.Control>
           </Form.Group>
           </div>);
@@ -167,13 +192,11 @@ class ProfileOrdersContainer extends Component {
 
         return (<tr key={i}>
           <td>
-            {o.id}
-          </td>
-          <td>
-            <strong>Products:</strong><br/>
+            <h3>Products</h3>
             {products}<br/>
-            <strong>Delivery Address:</strong><br/>
+            <h3>Delivery address</h3>
             {deliveryAddress}<br/>
+            {invoiceAddress}
           </td>
           <td className={"payment-status"}>
             {changeStatusForm}
@@ -182,10 +205,9 @@ class ProfileOrdersContainer extends Component {
         </tr>);
       });
 
-      ordersTable = (<Table>
+      ordersTable = (<Table className={"table--items"} hover={true}>
         <thead>
           <tr>
-            <th>Order no</th>
             <th>Your order</th>
             <th>Payment and order</th>
           </tr>

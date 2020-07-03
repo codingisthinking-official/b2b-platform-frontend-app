@@ -6,13 +6,16 @@ import AuthenticationService from "../../services/AuthenticationService";
 import ProductListComponent
   from "../../components/ProductListComponent/ProductListComponent";
 import SidebarContainer from "../SidebarContainer/SidebarContainer";
+import LoadingComponent
+  from "../../components/LoadingComponent/LoadingComponent";
 
 class CategoryProducts extends Component {
   constructor() {
     super();
     this.state = {
-      'products': null,
-      'category': null
+      products: null,
+      category: null,
+      loading: true
     };
   }
 
@@ -21,20 +24,20 @@ class CategoryProducts extends Component {
       return;
     }
 
-    const obj = {
+    fetch(config.api_url + '/api/category/by-name/' + this.props.match.params.category, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
       }
-    };
-    fetch(config.api_url + '/api/category/by-name/' + this.props.match.params.category, obj)
+    })
       .then(r => {
         r.json().then(r => {
           this.setState({
-            'category': r,
-            'products': r.products,
+            category: r,
+            products: r.products,
+            loading: false
           })
         });
       });
@@ -48,6 +51,7 @@ class CategoryProducts extends Component {
     return (
       <div className={"container--with-sidebar"}>
         <SidebarContainer current={this.props.match.params.category} />
+        <LoadingComponent visible={this.state.loading} />
         <ProductListComponent
           heading={this.state.category.name}
           products={this.state.products}
