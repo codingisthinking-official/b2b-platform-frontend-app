@@ -96,6 +96,7 @@ class ManageProductsContainer extends Component {
             </Button>
             <strong>{p.name}</strong>
             <br/><br/>
+            Location: {p.location}<br/>
             Price: €{p.price.toFixed(2)}
           </td>
           <td>

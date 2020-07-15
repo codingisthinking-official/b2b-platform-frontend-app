@@ -15,12 +15,12 @@ class SidebarContainer extends Component {
       items.push({
         "title": "Manage your stock",
         "children": [
+          // {
+          //   "title": "Manage categories",
+          //   "url": "/manage/categories/",
+          // },
           {
-            "title": "Manage categories",
-            "url": "/manage/categories/",
-          },
-          {
-            "title": "Manage products",
+            "title": "My stock",
             "url": "/manage/products/",
           }
         ]

@@ -13,7 +13,7 @@ class EditProductContainer extends Component {
     super();
     this.state = {
       updated: false,
-      categories: [],
+      // categories: [],
       product: {
         id: '',
         name: '',
@@ -21,7 +21,7 @@ class EditProductContainer extends Component {
         price: '',
         location: '',
         thumbnail: '',
-        category: '',
+        // category: '',
         delivery_dates: []
       },
       errors: []
@@ -29,7 +29,7 @@ class EditProductContainer extends Component {
   }
 
   componentDidMount() {
-    fetch(config.api_url + '/api/category/tree/', {
+    fetch(config.api_url + '/api/product/' + this.props.match.params.productId, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -38,30 +38,10 @@ class EditProductContainer extends Component {
       }
     })
     .then(r => {
-      r.json().then(cats => {
-        this.setState({'categories': cats});
-
-        fetch(config.api_url + '/api/product/' + this.props.match.params.productId, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
-          }
+      r.json().then(r => {
+        this.setState({
+          product: r,
         })
-          .then(r => {
-            r.json().then(r => {
-              let json = r;
-              if (!json.category) {
-                json.category = cats[0].id;
-              }
-
-              this.setState({
-                product: json,
-              })
-            });
-          });
-
       });
     });
   }
@@ -199,33 +179,33 @@ class EditProductContainer extends Component {
               {this.displayErrors(this.state.errors, 'location')}
             </Form.Text>
           </Form.Group>
-          <Form.Group controlId="thumbnail">
-            <Form.Label>Photo</Form.Label>
-            <Form.Control isInvalid={this.hasError(this.state.errors, 'thumbnail')} type="text" value={this.state.product.thumbnail} onChange={(e) => {
-              let product = this.state.product;
-              product.thumbnail = e.target.value;
-              this.setState({
-                product: product
-              });
-            }}/>
-            <Form.Text className="text-muted">
-              {this.displayErrors(this.state.errors, 'thumbnail')}
-            </Form.Text>
-          </Form.Group>
-          <Form.Group controlId="category">
-            <Form.Label>Product category</Form.Label>
-            <Form.Control as="select" value={this.state.product.category} onChange={(e) => {
-              let product = this.state.product;
-              product.category = parseInt(e.target.value);
-              this.setState({
-                product: product
-              });
-            }}>
-              {this.state.categories.map((c, i) => {
-                return (<option value={c.id} key={i}>{c.name}</option>);
-              })}
-            </Form.Control>
-          </Form.Group>
+          {/*<Form.Group controlId="thumbnail">*/}
+          {/*  <Form.Label>Photo</Form.Label>*/}
+          {/*  <Form.Control isInvalid={this.hasError(this.state.errors, 'thumbnail')} type="text" value={this.state.product.thumbnail} onChange={(e) => {*/}
+          {/*    let product = this.state.product;*/}
+          {/*    product.thumbnail = e.target.value;*/}
+          {/*    this.setState({*/}
+          {/*      product: product*/}
+          {/*    });*/}
+          {/*  }}/>*/}
+          {/*  <Form.Text className="text-muted">*/}
+          {/*    {this.displayErrors(this.state.errors, 'thumbnail')}*/}
+          {/*  </Form.Text>*/}
+          {/*</Form.Group>*/}
+          {/*<Form.Group controlId="category">*/}
+          {/*  <Form.Label>Product category</Form.Label>*/}
+          {/*  <Form.Control as="select" value={this.state.product.category} onChange={(e) => {*/}
+          {/*    let product = this.state.product;*/}
+          {/*    product.category = parseInt(e.target.value);*/}
+          {/*    this.setState({*/}
+          {/*      product: product*/}
+          {/*    });*/}
+          {/*  }}>*/}
+          {/*    {this.state.categories.map((c, i) => {*/}
+          {/*      return (<option value={c.id} key={i}>{c.name}</option>);*/}
+          {/*    })}*/}
+          {/*  </Form.Control>*/}
+          {/*</Form.Group>*/}
           <Button variant="primary" type="submit" onClick={(e) => {
             this.updateProduct(this.state.product.id)
             e.preventDefault();

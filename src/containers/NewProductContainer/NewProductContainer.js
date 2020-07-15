@@ -12,16 +12,16 @@ class NewProductContainer extends Component {
     super();
     this.state = {
       updated: false,
-      categories: [],
+      // categories: [],
       product: {
         id: '',
         name: '',
         ean: '',
         price: '',
         location: '',
-        category: {
-          id: ''
-        },
+        // category: {
+        //   id: ''
+        // },
         delivery_dates: []
       },
       errors: []
@@ -29,19 +29,19 @@ class NewProductContainer extends Component {
   }
 
   componentDidMount() {
-    fetch(config.api_url + '/api/category/tree/', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
-      }
-    })
-      .then(r => {
-        r.json().then(r => {
-          this.setState({'categories': r});
-        });
-      });
+    // fetch(config.api_url + '/api/category/tree/', {
+    //   method: 'GET',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
+    //   }
+    // })
+    //   .then(r => {
+    //     r.json().then(r => {
+    //       this.setState({'categories': r});
+    //     });
+    //   });
   }
 
   hasError(errors, key) {
@@ -184,20 +184,20 @@ class NewProductContainer extends Component {
               {this.displayErrors(this.state.errors, 'location')}
             </Form.Text>
           </Form.Group>
-          <Form.Group controlId="category">
-            <Form.Label>Product category</Form.Label>
-            <Form.Control as="select" value={this.state.product.category.id} onChange={(e) => {
-              let product = this.state.product;
-              product.category = parseInt(e.target.value);
-              this.setState({
-                product: product
-              });
-            }}>
-              {this.state.categories.map((c, i) => {
-                return (<option value={c.id} key={i}>{c.name}</option>);
-              })}
-            </Form.Control>
-          </Form.Group>
+          {/*<Form.Group controlId="category">*/}
+          {/*  <Form.Label>Product category</Form.Label>*/}
+          {/*  <Form.Control as="select" value={this.state.product.category.id} onChange={(e) => {*/}
+          {/*    let product = this.state.product;*/}
+          {/*    product.category = parseInt(e.target.value);*/}
+          {/*    this.setState({*/}
+          {/*      product: product*/}
+          {/*    });*/}
+          {/*  }}>*/}
+          {/*    {this.state.categories.map((c, i) => {*/}
+          {/*      return (<option value={c.id} key={i}>{c.name}</option>);*/}
+          {/*    })}*/}
+          {/*  </Form.Control>*/}
+          {/*</Form.Group>*/}
           <Button variant="primary" type="submit" onClick={(e) => {
             this.updateProduct(this.state.product.id)
             e.preventDefault();
