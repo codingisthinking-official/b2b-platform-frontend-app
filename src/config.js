@@ -1,3 +1,3 @@
 export default {
-    api_url: 'http://gears.dmn002.com:8000'
+    api_url: 'https://gears-api.dmn002.com'
 };

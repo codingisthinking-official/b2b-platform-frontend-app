@@ -97,7 +97,7 @@ class Header extends Component {
         <div className="container">
           <p className="user">
             <span className="current--user">
-              If you don't have an account on the platform you can either use registration form or contact the administrator at desk@codingisthinking.com
+              If you don't have an account on the platform you can either use registration form or contact the administrator at sales@girc.de 
             </span>
           </p>
         </div>
