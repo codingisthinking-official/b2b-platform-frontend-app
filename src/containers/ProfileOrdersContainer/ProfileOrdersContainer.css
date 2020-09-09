@@ -28,3 +28,26 @@
   font-weight: 600;
   border-left: 2px solid #999;
 }
+
+.click-logo {
+  color: #666;
+  font-style: italic;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.payment-method-list {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.payment-method-list img,
+.payment-method-list input[type=image] {
+  width: 100px;
+  cursor: pointer;
+}
+
+.payment-method-list input[type=image] {
+  position: relative;
+  top: 10px;
+}

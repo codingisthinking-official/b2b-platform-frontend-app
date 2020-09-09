@@ -127,11 +127,22 @@ class RegisterContainer extends Component {
           <Form.Label>First name</Form.Label>
           <Form.Control type="text" isInvalid={this.hasError(this.state.errors, 'firstName')} placeholder="First name" autoComplete={"off"} onChange={ (e) => this.setState({ first_name: e.target.value }) } />
           {this.displayErrors(this.state.errors, 'firstName')}
-        </Form.Group><Form.Group controlId="email">
-        <Form.Label>Last name</Form.Label>
-        <Form.Control type="text" isInvalid={this.hasError(this.state.errors, 'lastName')} placeholder="Last name" autoComplete={"off"} onChange={ (e) => this.setState({ last_name: e.target.value }) } />
-        {this.displayErrors(this.state.errors, 'lastName')}
-      </Form.Group>
+        </Form.Group>
+        <Form.Group controlId="companyName">
+          <Form.Label>Company name</Form.Label>
+          <Form.Control type="text" isInvalid={this.hasError(this.state.errors, 'companyName')} placeholder="Company name" autoComplete={"off"} onChange={ (e) => this.setState({ company_name: e.target.value }) } />
+          {this.displayErrors(this.state.errors, 'companyName')}
+        </Form.Group>
+        <Form.Group controlId="vat">
+          <Form.Label>VAT number</Form.Label>
+          <Form.Control type="text" isInvalid={this.hasError(this.state.errors, 'vat')} placeholder="Vat number" autoComplete={"off"} onChange={ (e) => this.setState({ vat: e.target.value }) } />
+          {this.displayErrors(this.state.errors, 'vat')}
+        </Form.Group>
+        <Form.Group controlId="email">
+          <Form.Label>Last name</Form.Label>
+          <Form.Control type="text" isInvalid={this.hasError(this.state.errors, 'lastName')} placeholder="Last name" autoComplete={"off"} onChange={ (e) => this.setState({ last_name: e.target.value }) } />
+          {this.displayErrors(this.state.errors, 'lastName')}
+        </Form.Group>
         <Form.Group controlId="email">
           <Form.Label>E-mail address</Form.Label>
           <Form.Control type="email" isInvalid={this.hasError(this.state.errors, 'email')} placeholder="E-mail address" autoComplete={"off"} onChange={ (e) => this.setState({ email: e.target.value }) } />

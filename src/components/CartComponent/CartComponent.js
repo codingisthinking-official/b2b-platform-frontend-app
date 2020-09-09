@@ -3,6 +3,7 @@ import config from "../../config";
 import './CartComponent.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import stripeLogo from "./stripe-logo.png";
+import paypalLogo from "./paypal-logo.png";
 
 import {
   faCreditCard,
@@ -149,7 +150,7 @@ class CartComponent extends Component {
             My cart
           </h1>
           <div className="limits">
-            <FontAwesomeIcon icon={ faCreditCard } /> Your payment method is: <strong>Credit Cart</strong>
+            <FontAwesomeIcon icon={ faCreditCard } /> You can either pay via <strong>Credit Cart</strong> or <strong>Paypal</strong>!
           </div>
           <Table>
             <thead>
@@ -267,24 +268,29 @@ class CartComponent extends Component {
             <div>
               Your VAT number, company name and address will be taken from your profile.
               You can change it in <a href={"/profile/edit/"}>edit profile section</a>.
-
               <br/><br/>
-
-              You need to have your Credit card connected <a href={"/profile/edit/"}>in your profile section</a>.
-              {creditCardAlert}
+              <Alert variant={"info"}>
+                Please check your company details before we generate an invoice for you.
+              </Alert>
             </div>
             <div className="text-right">
               <br/>
-              <Button disabled={this.props.items.length === 0 || this.state.cards.length === 0} variant="info" type="submit" onClick={(e) => {
+              <Button disabled={this.props.items.length === 0} variant="info" type="submit" onClick={(e) => {
                 this.sendOrder();
                 e.preventDefault();
                 e.stopPropagation();
               }}>
-                <FontAwesomeIcon icon={ faCreditCard } /> &nbsp;pay & order now
+                <FontAwesomeIcon icon={ faCreditCard } /> &nbsp; Order now
               </Button>
               <br/><br/>
               Payment provider:
               <img src={stripeLogo} alt={"Stripe payments"} className={"stripe-payment-logo"} style={{
+                "height": "30px",
+                "margin-left": "20px",
+                "position": "relative",
+                "top": "-2px"
+              }}/>
+              <img src={paypalLogo} alt={"Paypal payments"} className={"paypal-payment-logo"} style={{
                 "height": "30px",
                 "margin-left": "20px",
                 "position": "relative",

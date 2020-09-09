@@ -7,6 +7,9 @@ import SidebarContainer from "../SidebarContainer/SidebarContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 
+import stripeLogo from "../../components/CartComponent/stripe-logo.png";
+import paypalLogo from "../../components/CartComponent/paypal-logo.png";
+
 import "./ProfileOrdersContainer.css";
 
 class ProfileOrdersContainer extends Component {
@@ -77,6 +80,9 @@ class ProfileOrdersContainer extends Component {
     return this.state.products[id].name;
   }
 
+  findProductPriceById(id) {
+    return this.state.products[id].price;
+  }
 
   findProductEanById(id) {
     return this.state.products[id].ean;
@@ -98,7 +104,8 @@ class ProfileOrdersContainer extends Component {
                 {p.quantity}x {this.findProductNameById(p.product_id)}
                 <br/>
                 <small>
-                  SKU: {this.findProductEanById(p.product_id)}
+                  SKU: {this.findProductEanById(p.product_id)}<br/>
+                  Price: {this.findProductPriceById(p.product_id)}€
                 </small>
               </div>
             )
@@ -135,15 +142,36 @@ class ProfileOrdersContainer extends Component {
         );
 
         if (o.paid === false) {
+          let priceSum = 0;
+
+          o.products.map((p, i) => {
+            priceSum += this.findProductPriceById(p.product_id);
+          });
+
           let payButton = null;
           if (!AuthenticationService.isSupplier()) {
             payButton = (<div>
               <br/>
-              <Button size={"sm"} variant={"outline-primary"} onClick={(e) => {
+              <Alert variant={"info"}>You can pay either via credit card (Stripe) or Paypal</Alert>
+              <div class={"click-logo"}>
+                Please click a logo how would you like to pay:
+              </div>
+              <a class={"payment-method payment-method-list"} size={"sm"} variant={"outline-primary"} onClick={(e) => {
                 this.payOrder(o);
                 e.preventDefault();
                 e.stopPropagation();
-              }}>Pay for the order</Button>
+              }} disabled={true}>
+                <img src={stripeLogo} alt="Pay with paypal" title="Pay with paypal"/>
+              </a>
+               <form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="paypal--form payment-method-list">
+                   <input type="hidden" name="business" value="sales@girc.de"/>
+                   <input type="hidden" name="cmd" value="_xclick"/>
+                   <input type="hidden" name="item_name" value={"Payment for order id: " + o.id} />
+                   <input type="hidden" name="amount" value={priceSum}/>
+                   <input type="hidden" name="currency_code" value="EUR"/>
+                   <input type="image" name="submit" border="0" src={paypalLogo} alt="PayPal - The safer, easier way to pay online" class={"payment-method"}/>
+                   <img alt="" border="0" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"/>
+               </form>
             </div>);
           }
 

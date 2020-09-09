@@ -24,7 +24,7 @@ class ProductComponent extends Component {
     let buttonAddToCart = (
       <div className="container-cart">
         <div className="quantity">
-          <input type={"text"} value={this.state.quantity} readOnly={false} onChange={(e) => {
+          <input type={"text"} value={this.state.quantity} readOnly={true} onChange={(e) => {
             let value = 1;
             if (e.target.value.length > 0) {
               value = parseInt(e.target.value);
@@ -38,6 +38,7 @@ class ProductComponent extends Component {
           <a href={"/product/" + this.props.product.id + "/"} size={"sm"} onClick={(e) => {
             CartService.addToCart(this.props.product, this.state.quantity);
             this.setState({"added": true});
+            window.location = '/cart/';
             e.preventDefault();
             e.stopPropagation();
           }}>

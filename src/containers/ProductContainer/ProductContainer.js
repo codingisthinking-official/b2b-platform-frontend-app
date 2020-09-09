@@ -32,7 +32,7 @@ class ProductContainer extends Component {
         'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
       }
     };
-    fetch(config.api_url + '/api/product/' + this.props.match.params.productId, obj)
+    fetch(config.api_url + '/api/product/' + this.props.match.params.productId + '/', obj)
       .then(r => {
         r.json().then(r => {
           this.setState({
@@ -57,7 +57,7 @@ class ProductContainer extends Component {
     let buttonAddToCart = (
       <div className="container-cart">
         <div className="quantity">
-          <input type={"text"} value={this.state.quantity} onChange={(e) => {
+          <input type={"text"} readOnly={true} value={this.state.quantity} onChange={(e) => {
             let value = 1;
             if (e.target.value.length > 0) {
               value = parseInt(e.target.value);
@@ -71,6 +71,7 @@ class ProductContainer extends Component {
           <a href={"/product/" + this.state.product.id + "/"} size={"sm"} onClick={(e) => {
             CartService.addToCart(this.state.product, this.state.quantity);
             this.setState({"added": true});
+            window.location = '/cart/';
             e.preventDefault();
             e.stopPropagation();
           }}>
