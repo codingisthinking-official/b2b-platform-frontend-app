@@ -101,11 +101,12 @@ class ProductContainer extends Component {
             </div>
             <div className="description">
               <strong>Product:</strong> {this.state.product.name}<br/>
-              <strong>EAN:</strong> {this.state.product.ean}<br/>
+              <strong>Manufacturer:</strong> {this.state.product.manufacturer}<br/>
               <strong>Location:</strong> {this.state.product.location}<br/>
+              <strong>Lead time:</strong> {this.state.product.leadtime}<br/>
               <strong>In stock:</strong> {this.state.product.available}<br/>
               <div className="order">
-                Price: €{this.state.product.price}
+                Price: € {this.state.product.price}
                 {buttonAddToCart}
               </div>
             </div>

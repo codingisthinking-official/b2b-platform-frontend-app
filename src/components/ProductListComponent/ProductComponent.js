@@ -68,8 +68,8 @@ class ProductComponent extends Component {
           {productName}
         </a>
       </h4>
-      <p>EAN: {this.props.product.ean}</p>
       <p className={"location"}><strong>Location</strong>: {this.props.product.location}</p>
+      <p className={"manufacturer"}><strong>Manufacturer</strong>: {this.props.product.manufacturer}</p>
       <img src={ photo } alt={this.props.product.name}/>
       <div className="price">
         <div className="your-price">
