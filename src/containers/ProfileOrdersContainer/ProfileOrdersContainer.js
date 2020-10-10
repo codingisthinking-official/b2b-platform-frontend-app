@@ -6,6 +6,7 @@ import { Alert, Table, Button, Form } from "react-bootstrap";
 import SidebarContainer from "../SidebarContainer/SidebarContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { loadStripe } from "@stripe/stripe-js";
 
 import stripeLogo from "../../components/CartComponent/stripe-logo.png";
 import paypalLogo from "../../components/CartComponent/paypal-logo.png";
@@ -45,21 +46,15 @@ class ProfileOrdersContainer extends Component {
         });
   }
 
-  payOrder(order) {
-    fetch(config.api_url + '/api/payment/create/', {
-      method: 'POST',
-      body: JSON.stringify({
-        order: order.id
-      }),
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + AuthenticationService.getJwtToken()
+  async payOrder(order) {
+      const stripePromise = loadStripe("pk_live_51HYyBMHXsyKl5kdLrAatRvl8B05mWttpFcqPieb8jkDAKdD4nlvN8yrMXRIDpcCQ1zjWQp8zFWm4AMH4HOC1b0qE00PoKSybyx");
+      const stripe = await stripePromise;
+      const result = stripe.redirectToCheckout({
+        sessionId: order.stripe_session_id,
+      });
+      if (result.error) {
+        console.log(result.error.message);
       }
-    }).then(res => {
-      if (res.ok) {
-        this.fetchOrders();
-      }
-    });
   }
 
   updateOrderStatus(orderId, orderStatusId) {
@@ -136,7 +131,7 @@ class ProfileOrdersContainer extends Component {
 
         let changeStatusForm = null;
         let paymentStatus = (
-          <div class="paid">
+          <div className="paid">
             <FontAwesomeIcon icon={ faCheck } className="paid"/> paid
           </div>
         );
@@ -153,30 +148,30 @@ class ProfileOrdersContainer extends Component {
             payButton = (<div>
               <br/>
               <Alert variant={"info"}>You can pay either via credit card (Stripe) or Paypal</Alert>
-              <div class={"click-logo"}>
+              <div className={"click-logo"}>
                 Please click a logo how would you like to pay:
               </div>
-              <a class={"payment-method payment-method-list"} size={"sm"} variant={"outline-primary"} onClick={(e) => {
+              <a className={"payment-method payment-method-list"} size={"sm"} variant={"outline-primary"} onClick={(e) => {
                 this.payOrder(o);
                 e.preventDefault();
                 e.stopPropagation();
               }} disabled={true}>
-                <img src={stripeLogo} alt="Pay with paypal" title="Pay with paypal"/>
+                <img src={stripeLogo} alt="Pay with stripe" title="Pay with Stripe"/>
               </a>
-               <form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="paypal--form payment-method-list">
+               <form action="https://www.paypal.com/cgi-bin/webscr" method="post" className="paypal--form payment-method-list">
                    <input type="hidden" name="business" value="sales@girc.de"/>
                    <input type="hidden" name="cmd" value="_xclick"/>
                    <input type="hidden" name="item_name" value={"Payment for order id: " + o.id} />
                    <input type="hidden" name="amount" value={priceSum}/>
                    <input type="hidden" name="currency_code" value="EUR"/>
-                   <input type="image" name="submit" border="0" src={paypalLogo} alt="PayPal - The safer, easier way to pay online" class={"payment-method"}/>
+                   <input type="image" name="submit" border="0" src={paypalLogo} alt="PayPal - The safer, easier way to pay online" className={"payment-method"}/>
                    <img alt="" border="0" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"/>
                </form>
             </div>);
           }
 
           paymentStatus = (
-            <div class="unpaid">
+            <div className="unpaid">
               <FontAwesomeIcon icon={ faTimes } className="unpaid" /> not paid
               {payButton}
             </div>

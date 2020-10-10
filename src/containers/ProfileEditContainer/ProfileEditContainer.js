@@ -328,7 +328,7 @@ class ProfileEditContainer extends Component {
         <h1>Edit your profile</h1>
         {alert}
         <Row>
-          <Col lg={6}>
+          <Col lg={12}>
             <Form>
               <h3>1. Personal details</h3>
               <br/>
@@ -423,7 +423,6 @@ class ProfileEditContainer extends Component {
               </div>
             </Form>
           </Col>
-          {creditCardUpdateContainer}
         </Row>
       </div>
     </div>);
