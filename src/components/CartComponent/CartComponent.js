@@ -266,16 +266,11 @@ class CartComponent extends Component {
             </Row>
             <h3>3. Invoice data & payment</h3>
             <div>
-              Your VAT number, company name and address will be taken from your profile.
-              You can change it in <a href={"/profile/edit/"}>edit profile section</a>.
-              <br/><br/>
-              <Alert variant={"info"}>
-                Please check your company details before we generate an invoice for you.
-              </Alert>
+
             </div>
             <div className="text-right">
               <br/>
-              <Button disabled={this.props.items.length === 0} variant="info" type="submit" onClick={(e) => {
+              <Button disabled={this.props.items.length === 0 || true} variant="info" type="submit" onClick={(e) => {
                 this.sendOrder();
                 e.preventDefault();
                 e.stopPropagation();

@@ -62,7 +62,7 @@ class Header extends Component {
           <div className={"container"}>
             <p className="user">
               <span className="current--user">
-                Welcome, <strong>{user.name}</strong>
+                Welcome, <strong>Guest</strong>
               </span>
               {shoppingCart}
               <Button className={"btn-logout"}
@@ -97,7 +97,7 @@ class Header extends Component {
         <div className="container">
           <p className="user">
             <span className="current--user">
-              If you don't have an account on the platform you can either use registration form or contact the administrator at sales@girc.de 
+              If you don't have an account on the platform you can either use registration form or contact the administrator at sales@girc.de
             </span>
           </p>
         </div>

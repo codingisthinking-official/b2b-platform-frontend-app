@@ -52,15 +52,12 @@ class App extends React.Component {
     let footerComponent = <FooterComponent />
 
     if (!AuthenticationService.isAuthenticated()) {
+
       context = (<Router>
         <Switch>
-          <Route path="/register/">
-            <RegisterContainer />
-          </Route>
           <Route path="/">
             <Login />
           </Route>
-
         </Switch>
       </Router>);
     } else {
@@ -81,7 +78,7 @@ class App extends React.Component {
           });
         });
 
-      
+
       loggedRouter = (<Router>
         <Switch>
           <Route path="/manage/products/:productId/edit/">
@@ -113,39 +110,19 @@ class App extends React.Component {
             <SubAccountsContainer />
           </Route>
           <Route path="/products/search/:q/">
-            <NavMenuComponent/>
             <SearchContainer />
           </Route>
           <Route path="/product/:productId/">
-            <NavMenuComponent/>
             <ProductContainer />
           </Route>
           <Route path="/category/:category/">
-            <NavMenuComponent/>
-            <CategoryProducts />
-          </Route>
-          <Route path="/profile/invoices/">
-            <NavMenuComponent/>
-            <StaticPageContainer heading={"My invoices"} text={"No invoices yet."} />
-            <CategoryProducts />
-          </Route>
-          <Route path="/profile/orders/">
-            <NavMenuComponent/>
-            <ProfileOrdersContainer />
-            <CategoryProducts />
-          </Route>
-          <Route path="/profile/edit/">
-            <NavMenuComponent/>
-            <ProfileEditContainer />
             <CategoryProducts />
           </Route>
           <Route path="/cart/">
-            <NavMenuComponent/>
             <CartContainer />
             <CategoryProducts />
           </Route>
           <Route path="/">
-            <NavMenuComponent/>
             <HomepageContainer />
           </Route>
         </Switch>
